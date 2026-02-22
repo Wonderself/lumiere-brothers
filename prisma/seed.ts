@@ -1427,10 +1427,405 @@ async function main() {
   console.log('✅ Content hashes créés')
 
   // =============================================
+  // V4 — FILM TOKEN OFFERINGS
+  // =============================================
+  const offering1 = await prisma.filmTokenOffering.upsert({
+    where: { filmId: film1.id },
+    update: {},
+    create: {
+      filmId: film1.id,
+      totalTokens: 1000,
+      tokenPrice: 10.0,
+      minInvestment: 1,
+      maxPerUser: 100,
+      softCap: 5000,
+      hardCap: 10000,
+      raised: 5000,
+      tokensSold: 500,
+      status: 'OPEN',
+      legalStructure: 'IL_EXEMPT',
+      riskLevel: 'MEDIUM',
+      revenueModel: 'REVENUE_SHARE',
+      projectedROI: 15.0,
+      distributionPct: 70,
+      lockupDays: 90,
+      votingRights: true,
+      kycRequired: true,
+      accreditedOnly: false,
+      opensAt: new Date('2026-01-01'),
+      closesAt: new Date('2026-06-01'),
+    },
+  })
+
+  const offering2 = await prisma.filmTokenOffering.upsert({
+    where: { filmId: film2.id },
+    update: {},
+    create: {
+      filmId: film2.id,
+      totalTokens: 500,
+      tokenPrice: 20.0,
+      minInvestment: 1,
+      maxPerUser: 50,
+      softCap: 5000,
+      hardCap: 10000,
+      raised: 10000,
+      tokensSold: 500,
+      status: 'FUNDED',
+      legalStructure: 'IL_EXEMPT',
+      riskLevel: 'MEDIUM',
+      revenueModel: 'REVENUE_SHARE',
+      projectedROI: 20.0,
+      distributionPct: 70,
+      lockupDays: 90,
+      votingRights: true,
+      kycRequired: true,
+      accreditedOnly: false,
+      opensAt: new Date('2025-10-01'),
+      closesAt: new Date('2026-01-01'),
+      fundedAt: new Date('2025-12-20'),
+    },
+  })
+
+  console.log('✅ 2 FilmTokenOfferings créés')
+
+  // =============================================
+  // V4 — FILM TOKEN PURCHASES
+  // =============================================
+  const lockupDate1 = new Date()
+  lockupDate1.setDate(lockupDate1.getDate() + 90)
+
+  const purchase1 = await prisma.filmTokenPurchase.create({
+    data: {
+      offeringId: offering1.id,
+      userId: vip1.id,
+      tokenCount: 200,
+      amountPaid: 2000,
+      currency: 'EUR',
+      paymentMethod: 'STRIPE',
+      status: 'CONFIRMED',
+      kycVerified: true,
+      lockedUntil: lockupDate1,
+    },
+  })
+
+  const purchase2 = await prisma.filmTokenPurchase.create({
+    data: {
+      offeringId: offering1.id,
+      userId: expert1.id,
+      tokenCount: 100,
+      amountPaid: 1000,
+      currency: 'EUR',
+      paymentMethod: 'STRIPE',
+      status: 'CONFIRMED',
+      kycVerified: true,
+      lockedUntil: lockupDate1,
+    },
+  })
+
+  await prisma.filmTokenPurchase.create({
+    data: {
+      offeringId: offering1.id,
+      userId: contributor.id,
+      tokenCount: 50,
+      amountPaid: 500,
+      currency: 'EUR',
+      paymentMethod: 'STRIPE',
+      status: 'CONFIRMED',
+      kycVerified: true,
+      lockedUntil: lockupDate1,
+    },
+  })
+
+  await prisma.filmTokenPurchase.create({
+    data: {
+      offeringId: offering2.id,
+      userId: vip1.id,
+      tokenCount: 300,
+      amountPaid: 6000,
+      currency: 'EUR',
+      paymentMethod: 'STRIPE',
+      status: 'CONFIRMED',
+      kycVerified: true,
+      lockedUntil: new Date('2026-03-20'),
+    },
+  })
+
+  await prisma.filmTokenPurchase.create({
+    data: {
+      offeringId: offering2.id,
+      userId: artist.id,
+      tokenCount: 150,
+      amountPaid: 3000,
+      currency: 'EUR',
+      paymentMethod: 'STRIPE',
+      status: 'CONFIRMED',
+      kycVerified: true,
+      lockedUntil: new Date('2026-03-20'),
+    },
+  })
+
+  console.log('✅ 5 FilmTokenPurchases créés')
+
+  // =============================================
+  // V4 — FILM TOKEN TRANSFERS
+  // =============================================
+  await prisma.filmTokenTransfer.create({
+    data: {
+      offeringId: offering1.id,
+      fromUserId: vip1.id,
+      toUserId: viewer.id,
+      tokenCount: 20,
+      pricePerToken: 12.0,
+      totalAmount: 240,
+      fee: 12,
+      status: 'COMPLETED',
+      txHash: '0xabc123def456789completed',
+    },
+  })
+
+  await prisma.filmTokenTransfer.create({
+    data: {
+      offeringId: offering1.id,
+      fromUserId: expert1.id,
+      toUserId: rookie2.id,
+      tokenCount: 10,
+      pricePerToken: 11.5,
+      totalAmount: 115,
+      fee: 5.75,
+      status: 'PENDING',
+    },
+  })
+
+  console.log('✅ 2 FilmTokenTransfers créés')
+
+  // =============================================
+  // V4 — GOVERNANCE PROPOSALS
+  // =============================================
+  const proposalDeadline = new Date()
+  proposalDeadline.setDate(proposalDeadline.getDate() + 7)
+
+  const proposal1 = await prisma.governanceProposal.create({
+    data: {
+      offeringId: offering1.id,
+      proposerId: vip1.id,
+      title: 'Choix du compositeur musical',
+      description: 'Proposition de sélectionner un compositeur IA pour la bande originale d\'Exodus. Trois options : Hans AI (épique orchestral), Neon Synth (électronique cinématique), ou Classic Revival (néo-classique). Le vote déterminera la direction musicale du film.',
+      type: 'CASTING',
+      options: ['Hans AI', 'Neon Synth', 'Classic Revival'],
+      status: 'ACTIVE',
+      votesFor: 2,
+      votesAgainst: 1,
+      abstentions: 0,
+      quorumPct: 30,
+      deadline: proposalDeadline,
+    },
+  })
+
+  const proposal2 = await prisma.governanceProposal.create({
+    data: {
+      offeringId: offering2.id,
+      proposerId: artist.id,
+      title: 'Augmenter le budget VFX',
+      description: 'Suite aux premiers tests, les effets visuels de Neon Babylon nécessitent un budget supplémentaire de 5 000€ pour atteindre la qualité attendue. Réallocation depuis le poste Marketing.',
+      type: 'BUDGET_REALLOC',
+      options: ['Pour', 'Contre'],
+      status: 'PASSED',
+      votesFor: 8,
+      votesAgainst: 2,
+      abstentions: 1,
+      quorumPct: 30,
+      deadline: new Date('2026-02-15'),
+      executedAt: new Date('2026-02-16'),
+    },
+  })
+
+  console.log('✅ 2 GovernanceProposals créés')
+
+  // =============================================
+  // V4 — GOVERNANCE VOTES
+  // =============================================
+  await prisma.governanceVote.create({
+    data: {
+      proposalId: proposal1.id,
+      userId: vip1.id,
+      vote: 'FOR',
+      tokenWeight: 200,
+    },
+  })
+
+  await prisma.governanceVote.create({
+    data: {
+      proposalId: proposal1.id,
+      userId: expert1.id,
+      vote: 'FOR',
+      tokenWeight: 100,
+    },
+  })
+
+  await prisma.governanceVote.create({
+    data: {
+      proposalId: proposal1.id,
+      userId: contributor.id,
+      vote: 'AGAINST',
+      tokenWeight: 50,
+    },
+  })
+
+  await prisma.governanceVote.create({
+    data: {
+      proposalId: proposal2.id,
+      userId: vip1.id,
+      vote: 'FOR',
+      tokenWeight: 300,
+    },
+  })
+
+  console.log('✅ 4 GovernanceVotes créés')
+
+  // =============================================
+  // V4 — FILM REVENUES
+  // =============================================
+  await prisma.filmRevenue.create({
+    data: {
+      offeringId: offering2.id,
+      source: 'STREAMING',
+      amount: 1200,
+      period: '2026-01',
+      distributed: true,
+    },
+  })
+
+  await prisma.filmRevenue.create({
+    data: {
+      offeringId: offering2.id,
+      source: 'STREAMING',
+      amount: 1800,
+      period: '2026-02',
+      distributed: false,
+    },
+  })
+
+  await prisma.filmRevenue.create({
+    data: {
+      offeringId: offering2.id,
+      source: 'LICENSING',
+      amount: 500,
+      period: '2026-01',
+      distributed: true,
+    },
+  })
+
+  console.log('✅ 3 FilmRevenues créés')
+
+  // =============================================
+  // V4 — TOKEN DIVIDENDS
+  // =============================================
+  await prisma.tokenDividend.create({
+    data: {
+      offeringId: offering2.id,
+      userId: vip1.id,
+      amount: 714,
+      period: '2026-01',
+      tokenCount: 300,
+      totalPool: 1190,
+      status: 'PAID',
+      paidAt: new Date('2026-02-05'),
+    },
+  })
+
+  await prisma.tokenDividend.create({
+    data: {
+      offeringId: offering2.id,
+      userId: artist.id,
+      amount: 476,
+      period: '2026-01',
+      tokenCount: 150,
+      totalPool: 1190,
+      status: 'PENDING',
+    },
+  })
+
+  console.log('✅ 2 TokenDividends créés')
+
+  // =============================================
+  // V4 — FILM BUDGET LINES
+  // =============================================
+  // Budget lines for Exodus (film1)
+  const budget1Lines = [
+    { filmId: film1.id, category: 'SCRIPT', label: 'Écriture & Scénario', amount: 5000, percentage: 10, spent: 5000, locked: true },
+    { filmId: film1.id, category: 'VFX', label: 'Effets Visuels & Animation', amount: 15000, percentage: 30, spent: 2000, locked: false },
+    { filmId: film1.id, category: 'SOUND', label: 'Sound Design & Musique', amount: 8000, percentage: 16, spent: 0, locked: false },
+    { filmId: film1.id, category: 'MARKETING', label: 'Marketing & Distribution', amount: 7000, percentage: 14, spent: 500, locked: false },
+    { filmId: film1.id, category: 'LEGAL', label: 'Frais Juridiques & Conformité', amount: 3000, percentage: 6, spent: 1000, locked: false },
+    { filmId: film1.id, category: 'PLATFORM_FEE', label: 'Commission Plateforme (10%)', amount: 5000, percentage: 10, spent: 0, locked: true },
+    { filmId: film1.id, category: 'CONTINGENCY', label: 'Contingence & Imprévus', amount: 7000, percentage: 14, spent: 0, locked: false },
+  ]
+
+  for (const line of budget1Lines) {
+    await prisma.filmBudgetLine.create({ data: line })
+  }
+
+  // Budget lines for Neon Babylon (film2)
+  const budget2Lines = [
+    { filmId: film2.id, category: 'SCRIPT', label: 'Écriture & Worldbuilding', amount: 8000, percentage: 10, spent: 4000, locked: true },
+    { filmId: film2.id, category: 'VFX', label: 'VFX & Environnements', amount: 25000, percentage: 31.25, spent: 5000, locked: false },
+    { filmId: film2.id, category: 'SOUND', label: 'Sound Design Cyberpunk', amount: 10000, percentage: 12.5, spent: 0, locked: false },
+    { filmId: film2.id, category: 'ACTORS', label: 'Voix & Performance Capture', amount: 12000, percentage: 15, spent: 3000, locked: false },
+    { filmId: film2.id, category: 'MARKETING', label: 'Marketing & Teaser', amount: 8000, percentage: 10, spent: 1000, locked: false },
+    { filmId: film2.id, category: 'LEGAL', label: 'Frais Juridiques', amount: 4000, percentage: 5, spent: 2000, locked: false },
+    { filmId: film2.id, category: 'PLATFORM_FEE', label: 'Commission Plateforme (10%)', amount: 8000, percentage: 10, spent: 0, locked: true },
+    { filmId: film2.id, category: 'CONTINGENCY', label: 'Contingence', amount: 5000, percentage: 6.25, spent: 0, locked: false },
+  ]
+
+  for (const line of budget2Lines) {
+    await prisma.filmBudgetLine.create({ data: line })
+  }
+
+  console.log('✅ Budget lines créés (7 pour Exodus, 8 pour Neon Babylon)')
+
+  // =============================================
+  // V4 — LEGAL CHECKLIST
+  // =============================================
+  const legalItems = [
+    // ISA (Israel Securities Authority)
+    { category: 'ISA', item: 'Demande sandbox réglementaire ISA', description: 'Soumettre le dossier de demande au sandbox de l\'ISA pour les security tokens.', status: 'PENDING', responsible: 'HUMAN', priority: 10 },
+    { category: 'ISA', item: 'Classification des tokens (utility vs security)', description: 'Obtenir un avis juridique sur la classification des Film Tokens sous le droit israélien.', status: 'IN_PROGRESS', responsible: 'BOTH', priority: 10, notes: 'Consultation avec cabinet Meitar en cours' },
+    { category: 'ISA', item: 'Exemption prospectus < 35 investisseurs', description: 'Vérifier l\'applicabilité de l\'exemption pour offres à moins de 35 investisseurs qualifiés.', status: 'DONE', responsible: 'HUMAN', priority: 8, completedAt: new Date('2026-02-01') },
+    // KYC
+    { category: 'KYC', item: 'Intégrer Sumsub SDK', description: 'Intégration technique du SDK Sumsub pour la vérification d\'identité des investisseurs.', status: 'PENDING', responsible: 'CLAUDE', priority: 9 },
+    { category: 'KYC', item: 'Définir les niveaux de vérification', description: 'KYC basique (< 1000€), KYC avancé (> 1000€), KYC accréditée (> 10 000€).', status: 'DONE', responsible: 'BOTH', priority: 8, completedAt: new Date('2026-01-20') },
+    { category: 'KYC', item: 'Politique de rétention des données personnelles', description: 'Conformité RGPD pour le stockage des documents d\'identité. Durée : 5 ans après fin de relation.', status: 'PENDING', responsible: 'HUMAN', priority: 7 },
+    // AML
+    { category: 'AML', item: 'Procédures anti-blanchiment (AML)', description: 'Rédiger les procédures AML conformes aux régulations israéliennes et européennes.', status: 'IN_PROGRESS', responsible: 'HUMAN', priority: 9, notes: 'Draft en cours avec le compliance officer' },
+    { category: 'AML', item: 'Screening des sanctions (OFAC, EU)', description: 'Intégrer un outil de screening automatique des listes de sanctions internationales.', status: 'PENDING', responsible: 'CLAUDE', priority: 8 },
+    { category: 'AML', item: 'Déclaration de soupçon (process)', description: 'Définir le processus interne pour les déclarations de soupçon à l\'autorité compétente.', status: 'PENDING', responsible: 'HUMAN', priority: 7 },
+    // TAX
+    { category: 'TAX', item: 'Structure fiscale Israel-France', description: 'Convention fiscale bilatérale. Déterminer le traitement fiscal des revenus de tokens.', status: 'PENDING', responsible: 'HUMAN', priority: 8, notes: 'Consulter un fiscaliste spécialisé' },
+    { category: 'TAX', item: 'TVA sur les services de plateforme', description: 'Déterminer si les frais de plateforme sont soumis à la TVA (17% Israël, 20% France).', status: 'PENDING', responsible: 'HUMAN', priority: 7 },
+    { category: 'TAX', item: 'Fiscalité des dividendes tokens', description: 'Traitement fiscal des distributions de revenus aux détenteurs de tokens.', status: 'PENDING', responsible: 'HUMAN', priority: 7 },
+    // CONTRACT
+    { category: 'CONTRACT', item: 'CGU Plateforme (Terms of Service)', description: 'Rédaction des conditions générales d\'utilisation couvrant tous les modules.', status: 'IN_PROGRESS', responsible: 'BOTH', priority: 9, notes: 'V1 prête, en revue juridique' },
+    { category: 'CONTRACT', item: 'Contrat d\'investissement token standard', description: 'Template de contrat entre l\'investisseur et la société pour l\'achat de Film Tokens.', status: 'PENDING', responsible: 'HUMAN', priority: 9 },
+    { category: 'CONTRACT', item: 'Politique de remboursement', description: 'Conditions de remboursement des tokens en cas d\'annulation du projet film.', status: 'DONE', responsible: 'BOTH', priority: 8, completedAt: new Date('2026-02-10') },
+    // CORPORATE
+    { category: 'CORPORATE', item: 'Enregistrement société Ltd en Israël', description: 'Création de la société Lumière Ltd auprès du Companies Registrar. Capital minimum : 1 NIS.', status: 'PENDING', responsible: 'HUMAN', priority: 10 },
+    { category: 'CORPORATE', item: 'Ouverture compte bancaire professionnel', description: 'Compte multi-devises chez Leumi ou Hapoalim. Documents : enregistrement société, passeports directeurs.', status: 'PENDING', responsible: 'HUMAN', priority: 10 },
+    { category: 'CORPORATE', item: 'Assurance responsabilité civile professionnelle', description: 'Couverture RC Pro pour la plateforme, incluant la responsabilité liée aux investissements.', status: 'PENDING', responsible: 'HUMAN', priority: 6 },
+    { category: 'CORPORATE', item: 'Nomination d\'un DPO (Data Protection Officer)', description: 'Obligatoire RGPD si traitement à grande échelle de données personnelles.', status: 'PENDING', responsible: 'HUMAN', priority: 5 },
+    { category: 'CORPORATE', item: 'Registre des traitements de données', description: 'Documenter tous les traitements de données personnelles (Article 30 RGPD).', status: 'PENDING', responsible: 'CLAUDE', priority: 6 },
+  ]
+
+  for (const item of legalItems) {
+    await prisma.legalChecklist.create({ data: item as any })
+  }
+
+  console.log('✅ 20 items LegalChecklist créés')
+
+  // =============================================
   // SUMMARY
   // =============================================
   console.log('\n' + '='.repeat(50))
-  console.log('🎬 Seed Lumière Brothers V3 terminé avec succès!')
+  console.log('🎬 Seed Lumière Brothers V4 terminé avec succès!')
   console.log('='.repeat(50))
   console.log('\n📋 Comptes de test:')
   console.log('   Admin       : admin@lumiere.film         / Admin1234!')
@@ -1457,6 +1852,16 @@ async function main() {
   console.log('👥 Parrainages: 2 (VIP→Rookie2, Artiste→Viewer)')
   console.log('⭐ Réputation: 11 événements, 4 utilisateurs avec scores')
   console.log('\n💰 Aides publiques: 8 (BPI, CNC, CIR, RIAM, JEI, i-Nov, NACRE, ACRE)')
+  console.log('\n🪙  Tokenization V4:')
+  console.log('   - 2 FilmTokenOfferings (Exodus OPEN 50%, Neon Babylon FUNDED 100%)')
+  console.log('   - 5 FilmTokenPurchases (VIP, Expert, Contributor, Artist)')
+  console.log('   - 2 FilmTokenTransfers (1 completed, 1 pending)')
+  console.log('   - 2 GovernanceProposals (1 ACTIVE, 1 PASSED)')
+  console.log('   - 4 GovernanceVotes')
+  console.log('   - 3 FilmRevenues (streaming + licensing)')
+  console.log('   - 2 TokenDividends (1 PAID, 1 PENDING)')
+  console.log('   - 15 FilmBudgetLines (7 Exodus + 8 Neon Babylon)')
+  console.log('   - 20 LegalChecklist items (ISA, KYC, AML, TAX, CONTRACT, CORPORATE)')
   console.log('\n🚀 Pour démarrer: npm run dev')
 }
 

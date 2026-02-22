@@ -44,6 +44,10 @@ import {
   Menu,
   X,
   ChevronLeft,
+  Coins,
+  Vote,
+  Scale,
+  Bot,
 } from 'lucide-react'
 import { cn, getInitials } from '@/lib/utils'
 import { useState, useEffect } from 'react'
@@ -141,6 +145,18 @@ const mainNavSections: NavSection[] = [
     ],
   },
   {
+    title: 'Investissement',
+    color: 'text-amber-400',
+    hoverBg: 'hover:bg-amber-500/[0.04]',
+    activeBg: 'bg-amber-500/10',
+    activeBorder: 'border-amber-500/15',
+    links: [
+      { href: '/tokenization', label: 'Marketplace', icon: Coins, exact: true },
+      { href: '/tokenization/portfolio', label: 'Mon Portfolio', icon: Wallet },
+      { href: '/tokenization/governance', label: 'Gouvernance', icon: Vote },
+    ],
+  },
+  {
     title: 'Mon Compte',
     color: 'text-white/50',
     hoverBg: 'hover:bg-white/[0.03]',
@@ -193,6 +209,19 @@ const adminNavSections: NavSection[] = [
       { href: '/admin/payments', label: 'Paiements', icon: Wallet },
       { href: '/admin/payouts', label: 'Payouts Créateurs', icon: DollarSign },
       { href: '/admin/reviews', label: 'Reviews IA', icon: ClipboardCheck },
+    ],
+  },
+  {
+    title: 'Tokenization & Légal',
+    color: 'text-amber-400',
+    hoverBg: 'hover:bg-amber-500/[0.04]',
+    activeBg: 'bg-amber-500/10',
+    activeBorder: 'border-amber-500/15',
+    links: [
+      { href: '/admin/tokenization', label: 'Tokens Films', icon: Coins },
+      { href: '/admin/legal', label: 'Conformité Légale', icon: Scale },
+      { href: '/admin/ai-automation', label: 'Automatisation IA', icon: Bot },
+      { href: '/admin/film-tokenizer', label: 'Tokenizer Films', icon: Wand2 },
     ],
   },
   {

@@ -65,6 +65,14 @@ model User {
   referralsMade     Referral[]          @relation("Referrer")
   referredBy        Referral?           @relation("Referred")
   reputationEvents  ReputationEvent[]
+
+  // V4 — Tokenization
+  tokenPurchases    FilmTokenPurchase[]
+  tokenSales        FilmTokenTransfer[]  @relation("TokenSeller")
+  tokenBuys         FilmTokenTransfer[]  @relation("TokenBuyer")
+  governanceProposals GovernanceProposal[] @relation("ProposalAuthor")
+  governanceVotes   GovernanceVote[]
+  tokenDividends    TokenDividend[]
 }
 
 // ============================================
@@ -94,6 +102,10 @@ model Film {
   tasks   Task[]
   votes   FilmVote[]
   backers FilmBacker[]
+
+  // V4 — Tokenization
+  tokenOffering FilmTokenOffering?
+  budgetLines   FilmBudgetLine[]
 }
 
 model FilmPhase {
@@ -563,6 +575,10 @@ enum LumenTxType {
   ANALYTICS_PRO
   REFERRAL_BONUS
   STREAK_BONUS
+  TOKEN_PURCHASE
+  TOKEN_SALE
+  TOKEN_DIVIDEND
+  GOVERNANCE_REWARD
 }
 
 enum TodoPriority {
@@ -936,4 +952,236 @@ enum ReputationSource {
   CREATOR
   COLLABS
   SYSTEM
+}
+
+// ============================================
+// V4 — TOKENIZATION CO-PRODUCTION (ISRAELI FRAMEWORK)
+// ============================================
+
+model FilmTokenOffering {
+  id              String             @id @default(cuid())
+  filmId          String             @unique
+  totalTokens     Int                // Total tokens representing 100% of the film
+  tokenPrice      Float              // Price per token in EUR
+  minInvestment   Int                @default(1)    // Min tokens to buy
+  maxPerUser      Int?               // Max tokens per user (anti-whale)
+  softCap         Float?             // Minimum to raise for project to proceed
+  hardCap         Float              // Maximum raise
+  raised          Float              @default(0)    // Amount raised so far
+  tokensSold      Int                @default(0)
+  status          OfferingStatus     @default(DRAFT)
+  legalStructure  String             @default("IL_EXEMPT") // IL_EXEMPT, IL_PROSPECTUS, IL_SANDBOX
+  prospectusUrl   String?
+  riskLevel       RiskLevel          @default(MEDIUM)
+  revenueModel    String             @default("REVENUE_SHARE") // REVENUE_SHARE, EQUITY, HYBRID
+  projectedROI    Float?             // Projected % return
+  distributionPct Float              @default(70)   // % of revenue distributed to token holders
+  lockupDays      Int                @default(90)   // Days before tokens can be transferred
+  votingRights    Boolean            @default(true)  // Token holders can vote on decisions
+  kycRequired     Boolean            @default(true)
+  accreditedOnly  Boolean            @default(false)
+  opensAt         DateTime?
+  closesAt        DateTime?
+  fundedAt        DateTime?
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+
+  film        Film                @relation(fields: [filmId], references: [id], onDelete: Cascade)
+  purchases   FilmTokenPurchase[]
+  transfers   FilmTokenTransfer[]
+  dividends   TokenDividend[]
+  revenues    FilmRevenue[]
+  proposals   GovernanceProposal[]
+}
+
+model FilmTokenPurchase {
+  id            String          @id @default(cuid())
+  offeringId    String
+  userId        String
+  tokenCount    Int
+  amountPaid    Float
+  currency      String          @default("EUR")
+  paymentMethod String          @default("STRIPE") // STRIPE, CRYPTO, LUMEN, BANK_TRANSFER
+  txHash        String?         // Blockchain tx hash if crypto
+  status        PurchaseStatus  @default(PENDING)
+  kycVerified   Boolean         @default(false)
+  lockedUntil   DateTime?       // Lockup period end
+  createdAt     DateTime        @default(now())
+
+  offering FilmTokenOffering @relation(fields: [offeringId], references: [id], onDelete: Cascade)
+  user     User              @relation(fields: [userId], references: [id])
+}
+
+model FilmTokenTransfer {
+  id           String         @id @default(cuid())
+  offeringId   String
+  fromUserId   String
+  toUserId     String
+  tokenCount   Int
+  pricePerToken Float
+  totalAmount  Float
+  fee          Float          @default(0)  // Platform fee
+  status       TransferStatus @default(PENDING)
+  txHash       String?
+  createdAt    DateTime       @default(now())
+
+  offering FilmTokenOffering @relation(fields: [offeringId], references: [id])
+  fromUser User              @relation("TokenSeller", fields: [fromUserId], references: [id])
+  toUser   User              @relation("TokenBuyer", fields: [toUserId], references: [id])
+}
+
+model GovernanceProposal {
+  id          String           @id @default(cuid())
+  offeringId  String
+  proposerId  String
+  title       String
+  description String
+  type        ProposalType
+  options     String[]         @default(["Pour", "Contre"])
+  status      ProposalStatus   @default(ACTIVE)
+  votesFor    Int              @default(0)
+  votesAgainst Int             @default(0)
+  abstentions Int              @default(0)
+  quorumPct   Float            @default(30) // % of token holders needed
+  deadline    DateTime
+  executedAt  DateTime?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  offering FilmTokenOffering @relation(fields: [offeringId], references: [id], onDelete: Cascade)
+  proposer User              @relation("ProposalAuthor", fields: [proposerId], references: [id])
+  votes    GovernanceVote[]
+}
+
+model GovernanceVote {
+  id         String   @id @default(cuid())
+  proposalId String
+  userId     String
+  vote       String   // "FOR", "AGAINST", "ABSTAIN"
+  tokenWeight Int     // Number of tokens = voting power
+  createdAt  DateTime @default(now())
+
+  proposal GovernanceProposal @relation(fields: [proposalId], references: [id], onDelete: Cascade)
+  user     User               @relation(fields: [userId], references: [id])
+
+  @@unique([proposalId, userId])
+}
+
+model FilmRevenue {
+  id          String   @id @default(cuid())
+  offeringId  String
+  source      String   // "STREAMING", "THEATRICAL", "MERCH", "LICENSING", "SPONSORSHIP"
+  amount      Float
+  period      String   // "2026-02"
+  distributed Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  offering FilmTokenOffering @relation(fields: [offeringId], references: [id], onDelete: Cascade)
+}
+
+model TokenDividend {
+  id         String        @id @default(cuid())
+  offeringId String
+  userId     String
+  amount     Float
+  period     String        // "2026-02"
+  tokenCount Int           // Tokens held at snapshot
+  totalPool  Float         // Total pool for this period
+  status     DividendStatus @default(PENDING)
+  paidAt     DateTime?
+  createdAt  DateTime      @default(now())
+
+  offering FilmTokenOffering @relation(fields: [offeringId], references: [id])
+  user     User              @relation(fields: [userId], references: [id])
+}
+
+model FilmBudgetLine {
+  id          String   @id @default(cuid())
+  filmId      String
+  category    String   // "SCRIPT", "VFX", "SOUND", "ACTORS", "MARKETING", "LEGAL", "PLATFORM_FEE"
+  label       String
+  amount      Float
+  currency    String   @default("EUR")
+  percentage  Float    // % of total budget
+  locked      Boolean  @default(false) // Can't be modified once funded
+  spent       Float    @default(0)
+  createdAt   DateTime @default(now())
+
+  film Film @relation(fields: [filmId], references: [id], onDelete: Cascade)
+}
+
+model LegalChecklist {
+  id           String   @id @default(cuid())
+  category     String   // "KYC", "ISA", "AML", "TAX", "CONTRACT", "CORPORATE"
+  item         String
+  description  String
+  status       String   @default("PENDING") // PENDING, IN_PROGRESS, DONE, BLOCKED, NA
+  responsible  String   @default("HUMAN")   // HUMAN, CLAUDE, BOTH
+  priority     Int      @default(0)
+  notes        String?
+  documentUrl  String?
+  completedAt  DateTime?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// ============================================
+// V4 — NEW ENUMS
+// ============================================
+
+enum OfferingStatus {
+  DRAFT
+  PENDING_LEGAL
+  OPEN
+  FUNDED
+  CLOSED
+  CANCELLED
+  SUSPENDED
+}
+
+enum PurchaseStatus {
+  PENDING
+  KYC_REQUIRED
+  CONFIRMED
+  REFUNDED
+  CANCELLED
+}
+
+enum TransferStatus {
+  PENDING
+  COMPLETED
+  CANCELLED
+  BLOCKED
+}
+
+enum ProposalType {
+  CASTING
+  SCRIPT_CHANGE
+  BUDGET_REALLOC
+  DISTRIBUTION
+  MARKETING
+  CREATIVE
+  GENERAL
+}
+
+enum ProposalStatus {
+  ACTIVE
+  PASSED
+  REJECTED
+  EXECUTED
+  EXPIRED
+}
+
+enum RiskLevel {
+  LOW
+  MEDIUM
+  HIGH
+  VERY_HIGH
+}
+
+enum DividendStatus {
+  PENDING
+  CALCULATED
+  PAID
+  FAILED
 }
