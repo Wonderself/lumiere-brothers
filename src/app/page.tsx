@@ -363,8 +363,137 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ═══════════ PRICING — 20% TOKEN ADVANTAGE ═══════════ */}
+      <section className="py-24 px-4">
+        <div className="container mx-auto max-w-5xl">
+          <div className="text-center mb-16">
+            <p className="text-[#D4AF37] text-sm font-medium uppercase tracking-widest mb-3">Tarification</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ fontFamily: 'var(--font-playfair)' }}>
+              75% Moins Cher que les <span className="text-gold-gradient">Concurrents</span>
+            </h2>
+            <p className="text-[#8E8EA0] text-lg max-w-2xl mx-auto">
+              Pas d&apos;abonnement mensuel couteux. Nous ne prenons que 20% de commission
+              sur les tokens. Vous gardez 80% de vos revenus.
+            </p>
+          </div>
+
+          {/* Comparison */}
+          <div className="grid md:grid-cols-2 gap-8 mb-16">
+            {/* Competitors */}
+            <div className="rounded-2xl border border-red-100 bg-red-50/30 p-8">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="h-10 w-10 rounded-full bg-red-100 flex items-center justify-center">
+                  <span className="text-red-500 font-bold text-lg">x</span>
+                </div>
+                <div>
+                  <h3 className="font-bold text-lg text-[#1A1A2E]">Les Autres Plateformes</h3>
+                  <p className="text-xs text-[#8E8EA0]">Modele abonnement classique</p>
+                </div>
+              </div>
+              <div className="space-y-4">
+                {[
+                  'Abonnement mensuel 29-99 EUR/mois',
+                  'Tokens limites par plan',
+                  'Fonctionnalites verrouillees',
+                  'Pas de revenus pour les createurs',
+                  'Support premium payant',
+                ].map((item) => (
+                  <div key={item} className="flex items-center gap-3 text-sm text-[#4A4A68]">
+                    <div className="h-5 w-5 rounded-full bg-red-100 flex items-center justify-center shrink-0">
+                      <span className="text-red-400 text-xs font-bold">x</span>
+                    </div>
+                    {item}
+                  </div>
+                ))}
+              </div>
+              <div className="mt-8 pt-6 border-t border-red-100 text-center">
+                <span className="text-3xl font-bold text-[#8E8EA0] line-through">99 EUR</span>
+                <span className="text-sm text-[#8E8EA0] block mt-1">par mois</span>
+              </div>
+            </div>
+
+            {/* Lumiere */}
+            <div className="rounded-2xl border-2 border-[#D4AF37]/30 bg-[#D4AF37]/5 p-8 relative overflow-hidden">
+              <div className="absolute top-0 right-0 bg-[#D4AF37] text-black text-xs font-bold px-4 py-1 rounded-bl-xl">
+                RECOMMANDE
+              </div>
+              <div className="flex items-center gap-3 mb-6">
+                <div className="h-10 w-10 rounded-full bg-[#D4AF37]/20 flex items-center justify-center">
+                  <CheckCircle className="h-5 w-5 text-[#D4AF37]" />
+                </div>
+                <div>
+                  <h3 className="font-bold text-lg text-[#1A1A2E]">Lumiere Creators</h3>
+                  <p className="text-xs text-[#8E8EA0]">Modele token — payez ce que vous utilisez</p>
+                </div>
+              </div>
+              <div className="space-y-4">
+                {[
+                  'Aucun abonnement — 0 EUR/mois',
+                  'Seulement 20% de commission sur les tokens',
+                  'Toutes les fonctionnalites incluses',
+                  'Gagnez de l\'argent en realisant des taches',
+                  'Support communautaire gratuit + IA',
+                ].map((item) => (
+                  <div key={item} className="flex items-center gap-3 text-sm text-[#4A4A68]">
+                    <div className="h-5 w-5 rounded-full bg-[#D4AF37] flex items-center justify-center shrink-0">
+                      <CheckCircle className="h-3 w-3 text-white" />
+                    </div>
+                    {item}
+                  </div>
+                ))}
+              </div>
+              <div className="mt-8 pt-6 border-t border-[#D4AF37]/20 text-center">
+                <span className="text-5xl font-bold text-[#D4AF37]" style={{ fontFamily: 'var(--font-playfair)' }}>
+                  20%
+                </span>
+                <span className="text-sm text-[#4A4A68] block mt-1">
+                  de commission uniquement sur les tokens utilises
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Token packs */}
+          <div className="grid grid-cols-3 gap-6">
+            {[
+              { name: 'Starter', tokens: '100', price: '10 EUR', desc: 'Ideal pour tester', color: 'border-[#E5E5E0]' },
+              { name: 'Pro', tokens: '500', price: '45 EUR', desc: 'Pour les createurs reguliers', color: 'border-[#D4AF37]/40', featured: true },
+              { name: 'Studio', tokens: '2000', price: '150 EUR', desc: 'Pour les equipes', color: 'border-[#E5E5E0]' },
+            ].map((tier) => (
+              <div
+                key={tier.name}
+                className={`rounded-2xl border-2 p-6 text-center bg-white relative ${tier.color} ${tier.featured ? 'shadow-lg' : 'shadow-sm'}`}
+              >
+                {tier.featured && (
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 text-xs font-bold px-4 py-1 rounded-full bg-[#D4AF37] text-white">
+                    Populaire
+                  </div>
+                )}
+                <h4 className="font-semibold text-sm text-[#8E8EA0] uppercase tracking-wider mb-3">{tier.name}</h4>
+                <div className="text-4xl font-bold text-[#D4AF37] mb-1" style={{ fontFamily: 'var(--font-playfair)' }}>
+                  {tier.tokens}
+                </div>
+                <p className="text-xs text-[#8E8EA0] mb-3">tokens</p>
+                <p className="text-lg font-bold text-[#1A1A2E] mb-1">{tier.price}</p>
+                <p className="text-xs text-[#8E8EA0]">{tier.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Savings highlight */}
+          <div className="mt-10 p-6 rounded-2xl border border-green-200 bg-green-50/50 text-center">
+            <p className="text-lg font-bold text-green-700 mb-1">
+              En moyenne, nos utilisateurs economisent 75% par rapport aux abonnements classiques
+            </p>
+            <p className="text-sm text-green-600/70">
+              Un createur qui depense 50 EUR de tokens ne paie que 10 EUR de commission. Chez les concurrents, l&apos;abonnement seul coute 29-99 EUR/mois.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* ═══════════ ABOUT TEASER ═══════════ */}
-      <section className="py-20 px-4">
+      <section className="py-20 px-4 bg-white">
         <div className="container mx-auto max-w-6xl">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
