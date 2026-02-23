@@ -6,8 +6,8 @@ import type { Metadata } from 'next'
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
-  title: 'Classement — Lumière',
-  description: 'Les meilleurs contributeurs de la plateforme Lumière.',
+  title: 'Classement — Lumiere',
+  description: 'Les meilleurs contributeurs de la plateforme Lumiere.',
 }
 
 async function getLeaderboard() {
@@ -49,9 +49,9 @@ async function getStats() {
 
 const LEVEL_COLORS: Record<string, string> = {
   ROOKIE: 'text-gray-400',
-  PRO: 'text-blue-400',
+  PRO: 'text-blue-500',
   EXPERT: 'text-[#D4AF37]',
-  VIP: 'text-purple-400',
+  VIP: 'text-purple-500',
 }
 
 const LEVEL_LABELS: Record<string, string> = {
@@ -68,16 +68,15 @@ export default async function LeaderboardPage() {
   const rest = users.slice(3)
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-white">
       {/* ================================================================ */}
       {/* HERO SECTION                                                     */}
       {/* ================================================================ */}
-      <section className="relative pt-24 pb-16 px-4 overflow-hidden">
+      <section className="relative pt-24 pb-16 px-4 overflow-hidden bg-gradient-to-b from-gray-50 to-white">
         {/* Ambient blur circles */}
         <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
           <div className="absolute top-20 left-1/4 w-96 h-96 bg-[#D4AF37]/[0.03] rounded-full blur-[120px]" />
           <div className="absolute top-10 right-1/3 w-72 h-72 bg-[#D4AF37]/[0.04] rounded-full blur-[100px]" />
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[250px] bg-[#D4AF37]/[0.02] rounded-full blur-[150px]" />
           {/* Gold particles */}
           <div className="absolute top-[20%] left-[25%] w-1 h-1 rounded-full bg-[#D4AF37]/40 animate-pulse" />
           <div className="absolute top-[30%] right-[20%] w-1.5 h-1.5 rounded-full bg-[#D4AF37]/30 animate-pulse [animation-delay:0.5s]" />
@@ -94,7 +93,7 @@ export default async function LeaderboardPage() {
 
           {/* Title */}
           <h1
-            className="text-4xl sm:text-5xl md:text-6xl font-bold mb-5"
+            className="text-4xl sm:text-5xl md:text-6xl font-bold mb-5 text-gray-900"
             style={{ fontFamily: 'var(--font-playfair)' }}
           >
             <span
@@ -110,7 +109,7 @@ export default async function LeaderboardPage() {
           </h1>
 
           {/* Subtitle */}
-          <p className="text-white/40 text-lg max-w-xl mx-auto mb-12">
+          <p className="text-gray-500 text-lg max-w-xl mx-auto mb-12">
             Les meilleurs contributeurs de la plateforme
           </p>
 
@@ -118,22 +117,22 @@ export default async function LeaderboardPage() {
           <div className="grid grid-cols-3 gap-4 max-w-2xl mx-auto">
             {[
               { label: 'Contributeurs actifs', value: stats.totalUsers, icon: Star, color: 'text-[#D4AF37]' },
-              { label: 'Taches validees', value: stats.totalTasks, icon: Zap, color: 'text-green-400' },
-              { label: 'Revenus distribues', value: formatPrice(stats.totalPaid), icon: Film, color: 'text-purple-400' },
+              { label: 'Taches validees', value: stats.totalTasks, icon: Zap, color: 'text-green-500' },
+              { label: 'Revenus distribues', value: formatPrice(stats.totalPaid), icon: Film, color: 'text-purple-500' },
             ].map((s) => (
-              <div key={s.label} className="text-center p-5 rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm">
-                <div className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-white/[0.05] border border-white/[0.08] mx-auto mb-2">
+              <div key={s.label} className="text-center p-5 rounded-2xl border border-gray-100 bg-white shadow-sm">
+                <div className="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-gray-50 border border-gray-200 mx-auto mb-2">
                   <s.icon className={`h-4 w-4 ${s.color}`} />
                 </div>
-                <div className="text-2xl font-bold text-white">{s.value}</div>
-                <div className="text-xs text-white/40 mt-1">{s.label}</div>
+                <div className="text-2xl font-bold text-gray-900">{s.value}</div>
+                <div className="text-xs text-gray-400 mt-1">{s.label}</div>
               </div>
             ))}
           </div>
         </div>
 
         {/* Bottom separator */}
-        <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#D4AF37]/10 to-transparent" />
+        <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
       </section>
 
       {/* ================================================================ */}
@@ -142,9 +141,9 @@ export default async function LeaderboardPage() {
       <div className="px-4 pb-16">
         <div className="container mx-auto max-w-4xl">
           {users.length === 0 ? (
-            <div className="text-center py-24 text-white/30">
+            <div className="text-center py-24 text-gray-400">
               <Trophy className="h-16 w-16 mx-auto mb-4 opacity-30" />
-              <p className="text-xl">Aucun classement disponible</p>
+              <p className="text-xl text-gray-500">Aucun classement disponible</p>
               <p className="text-sm mt-2">Soyez le premier a contribuer !</p>
             </div>
           ) : (
@@ -154,70 +153,70 @@ export default async function LeaderboardPage() {
                 <div className="grid grid-cols-3 gap-4 mb-16 items-end">
                   {/* 2nd place */}
                   {top3[1] ? (
-                    <div className="flex flex-col items-center p-6 rounded-2xl border border-gray-500/20 bg-gray-500/5 mt-8">
+                    <div className="flex flex-col items-center p-6 rounded-2xl border border-gray-200 bg-gray-50 mt-8 shadow-sm">
                       <div className="mb-3">
-                        <Medal className="h-6 w-6 text-gray-300" />
+                        <Medal className="h-6 w-6 text-gray-400" />
                       </div>
-                      <div className="w-14 h-14 rounded-full bg-gradient-to-br from-gray-500/20 to-gray-700/20 flex items-center justify-center text-xl font-bold text-white mb-2">
+                      <div className="w-14 h-14 rounded-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center text-xl font-bold text-gray-600 mb-2">
                         {top3[1].displayName?.[0]?.toUpperCase() || '?'}
                       </div>
-                      <p className="font-semibold text-sm truncate w-full text-center mb-1">
+                      <p className="font-semibold text-sm text-gray-900 truncate w-full text-center mb-1">
                         {top3[1].displayName}
                       </p>
                       <span className={`text-xs font-medium mb-2 ${LEVEL_COLORS[top3[1].level]}`}>
                         {LEVEL_LABELS[top3[1].level]}
                       </span>
-                      <p className="text-lg font-bold text-white">{top3[1].points.toLocaleString()}</p>
-                      <p className="text-xs text-white/30">points</p>
+                      <p className="text-lg font-bold text-gray-900">{top3[1].points.toLocaleString()}</p>
+                      <p className="text-xs text-gray-400">points</p>
                     </div>
                   ) : <div />}
 
-                  {/* 1st place — with gold glow, crown, and gold ring */}
-                  <div className="flex flex-col items-center p-6 rounded-2xl border border-[#D4AF37]/30 bg-[#D4AF37]/5 shadow-[0_0_40px_rgba(212,175,55,0.15)]">
+                  {/* 1st place */}
+                  <div className="flex flex-col items-center p-6 rounded-2xl border border-[#D4AF37]/30 bg-[#D4AF37]/[0.04] shadow-md">
                     <div className="mb-3">
                       <Crown className="h-7 w-7 text-[#D4AF37]" />
                     </div>
-                    <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#D4AF37]/20 to-amber-700/20 flex items-center justify-center text-2xl font-bold text-[#D4AF37] mb-2 ring-2 ring-[#D4AF37]/50 shadow-[0_0_20px_rgba(212,175,55,0.2)]">
+                    <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#D4AF37]/20 to-amber-200/40 flex items-center justify-center text-2xl font-bold text-[#D4AF37] mb-2 ring-2 ring-[#D4AF37]/30">
                       {top3[0].displayName?.[0]?.toUpperCase() || '?'}
                     </div>
-                    <p className="font-semibold text-sm truncate w-full text-center mb-1">
+                    <p className="font-semibold text-sm text-gray-900 truncate w-full text-center mb-1">
                       {top3[0].displayName}
                     </p>
                     <span className={`text-xs font-medium mb-2 ${LEVEL_COLORS[top3[0].level]}`}>
                       {LEVEL_LABELS[top3[0].level]}
                     </span>
                     <p className="text-2xl font-bold text-[#D4AF37]">{top3[0].points.toLocaleString()}</p>
-                    <p className="text-xs text-white/30">points</p>
+                    <p className="text-xs text-gray-400">points</p>
                   </div>
 
                   {/* 3rd place */}
                   {top3[2] ? (
-                    <div className="flex flex-col items-center p-6 rounded-2xl border border-amber-600/20 bg-amber-600/5 mt-16">
+                    <div className="flex flex-col items-center p-6 rounded-2xl border border-amber-200 bg-amber-50/50 mt-16 shadow-sm">
                       <div className="mb-3">
                         <Medal className="h-6 w-6 text-amber-600" />
                       </div>
-                      <div className="w-14 h-14 rounded-full bg-gradient-to-br from-amber-600/20 to-amber-800/20 flex items-center justify-center text-xl font-bold text-white mb-2">
+                      <div className="w-14 h-14 rounded-full bg-gradient-to-br from-amber-200/40 to-amber-300/40 flex items-center justify-center text-xl font-bold text-amber-700 mb-2">
                         {top3[2].displayName?.[0]?.toUpperCase() || '?'}
                       </div>
-                      <p className="font-semibold text-sm truncate w-full text-center mb-1">
+                      <p className="font-semibold text-sm text-gray-900 truncate w-full text-center mb-1">
                         {top3[2].displayName}
                       </p>
                       <span className={`text-xs font-medium mb-2 ${LEVEL_COLORS[top3[2].level]}`}>
                         {LEVEL_LABELS[top3[2].level]}
                       </span>
-                      <p className="text-lg font-bold text-white">{top3[2].points.toLocaleString()}</p>
-                      <p className="text-xs text-white/30">points</p>
+                      <p className="text-lg font-bold text-gray-900">{top3[2].points.toLocaleString()}</p>
+                      <p className="text-xs text-gray-400">points</p>
                     </div>
                   ) : <div />}
                 </div>
               )}
 
-              {/* Visual separator between podium and table */}
+              {/* Visual separator */}
               {rest.length > 0 && (
                 <div className="relative mb-10">
-                  <div className="h-px bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
-                  <div className="absolute left-1/2 -translate-x-1/2 -top-3 px-4 bg-[#0A0A0A]">
-                    <span className="text-xs text-white/25 uppercase tracking-widest">Classement complet</span>
+                  <div className="h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
+                  <div className="absolute left-1/2 -translate-x-1/2 -top-3 px-4 bg-white">
+                    <span className="text-xs text-gray-400 uppercase tracking-widest">Classement complet</span>
                   </div>
                 </div>
               )}
@@ -228,33 +227,33 @@ export default async function LeaderboardPage() {
                   {rest.map((user, idx) => (
                     <div
                       key={user.id}
-                      className="flex items-center gap-4 p-4 rounded-xl border border-white/[0.06] bg-white/[0.02] hover:border-white/10 transition-all"
+                      className="flex items-center gap-4 p-4 rounded-xl border border-gray-100 bg-white hover:border-gray-200 hover:shadow-sm transition-all shadow-sm"
                     >
-                      <div className="w-8 text-center text-sm font-bold text-white/30 shrink-0">
+                      <div className="w-8 text-center text-sm font-bold text-gray-400 shrink-0">
                         #{idx + 4}
                       </div>
 
-                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-white/5 to-white/10 flex items-center justify-center text-sm font-bold text-white shrink-0">
+                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center text-sm font-bold text-gray-600 shrink-0">
                         {user.displayName?.[0]?.toUpperCase() || '?'}
                       </div>
 
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-0.5">
-                          <p className="font-semibold text-sm truncate">{user.displayName}</p>
+                          <p className="font-semibold text-sm text-gray-900 truncate">{user.displayName}</p>
                           <span className={`text-xs ${LEVEL_COLORS[user.level]}`}>
                             {LEVEL_LABELS[user.level]}
                           </span>
                         </div>
-                        <p className="text-xs text-white/30">
+                        <p className="text-xs text-gray-400">
                           {user.tasksCompleted} tache{user.tasksCompleted > 1 ? 's' : ''} validee{user.tasksCompleted > 1 ? 's' : ''}
                         </p>
                       </div>
 
                       <div className="text-right shrink-0">
-                        <div className="text-lg font-bold text-white">
+                        <div className="text-lg font-bold text-gray-900">
                           {user.points.toLocaleString()}
                         </div>
-                        <div className="text-xs text-white/30">points</div>
+                        <div className="text-xs text-gray-400">points</div>
                       </div>
                     </div>
                   ))}
@@ -264,21 +263,20 @@ export default async function LeaderboardPage() {
           )}
 
           {/* CTA */}
-          <div className="mt-16 text-center p-8 rounded-2xl border border-[#D4AF37]/20 bg-[#D4AF37]/5 relative overflow-hidden">
-            {/* Ambient glow */}
+          <div className="mt-16 text-center p-8 rounded-2xl border border-[#D4AF37]/20 bg-[#D4AF37]/[0.03] relative overflow-hidden shadow-sm">
             <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-32 bg-[#D4AF37]/[0.06] rounded-full blur-[60px]" />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-32 bg-[#D4AF37]/[0.05] rounded-full blur-[60px]" />
             </div>
             <div className="relative">
-              <h2 className="text-2xl font-bold mb-2" style={{ fontFamily: 'var(--font-playfair)' }}>
+              <h2 className="text-2xl font-bold mb-2 text-gray-900" style={{ fontFamily: 'var(--font-playfair)' }}>
                 Rejoignez le classement
               </h2>
-              <p className="text-white/50 mb-6 text-sm">
+              <p className="text-gray-500 mb-6 text-sm">
                 Completez des taches, gagnez des points, progressez dans les niveaux.
               </p>
               <a
                 href="/register"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#D4AF37] text-black font-semibold hover:bg-[#F0D060] transition-colors"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#D4AF37] text-white font-semibold hover:bg-[#C4A030] transition-colors shadow-sm"
               >
                 <Star className="h-4 w-4" />
                 Commencer a contribuer

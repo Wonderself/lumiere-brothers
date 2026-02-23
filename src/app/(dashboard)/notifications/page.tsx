@@ -32,13 +32,13 @@ const NOTIF_ICONS: Record<string, typeof Bell> = {
 }
 
 const NOTIF_COLORS: Record<string, string> = {
-  NEW_TASK_AVAILABLE: 'text-blue-400',
-  TASK_VALIDATED: 'text-green-400',
-  TASK_REJECTED: 'text-red-400',
-  SUBMISSION_REVIEWED: 'text-yellow-400',
-  PAYMENT_RECEIVED: 'text-emerald-400',
+  NEW_TASK_AVAILABLE: 'text-blue-500',
+  TASK_VALIDATED: 'text-green-500',
+  TASK_REJECTED: 'text-red-500',
+  SUBMISSION_REVIEWED: 'text-yellow-500',
+  PAYMENT_RECEIVED: 'text-emerald-500',
   LEVEL_UP: 'text-[#D4AF37]',
-  SYSTEM: 'text-white/50',
+  SYSTEM: 'text-gray-400',
 }
 
 function timeAgo(date: Date): string {
@@ -102,13 +102,13 @@ export default async function NotificationsPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1
-            className="text-3xl font-bold"
+            className="text-3xl font-bold text-gray-900"
             style={{ fontFamily: 'var(--font-playfair)' }}
           >
             Notifications
           </h1>
           {unreadCount > 0 && (
-            <p className="text-sm text-white/40 mt-1">
+            <p className="text-sm text-gray-500 mt-1">
               {unreadCount} non lue{unreadCount > 1 ? 's' : ''}
             </p>
           )}
@@ -125,101 +125,96 @@ export default async function NotificationsPage() {
 
       {/* Notifications List */}
       {notifications.length === 0 ? (
-        <Card variant="glass">
-          <CardContent className="p-12 text-center">
-            <InboxIcon className="h-12 w-12 text-white/15 mx-auto mb-4" />
-            <p className="text-white/40 text-lg mb-1">Aucune notification</p>
-            <p className="text-white/25 text-sm">
-              Vos notifications apparaitront ici
-            </p>
-          </CardContent>
-        </Card>
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-12 text-center">
+          <InboxIcon className="h-12 w-12 text-gray-200 mx-auto mb-4" />
+          <p className="text-gray-500 text-lg mb-1">Aucune notification</p>
+          <p className="text-gray-400 text-sm">
+            Vos notifications apparaitront ici
+          </p>
+        </div>
       ) : (
         <div className="space-y-8">
           {grouped.map((group) => (
             <div key={group.label}>
-              <h2 className="text-sm font-medium text-white/30 uppercase tracking-wider mb-3 px-1">
+              <h2 className="text-sm font-medium text-gray-400 uppercase tracking-wider mb-3 px-1">
                 {group.label}
               </h2>
-              {/* Date group container with subtle background */}
-              <div className="bg-white/[0.02] rounded-2xl border border-white/[0.04] p-3 space-y-2">
+              {/* Date group container */}
+              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-3 space-y-2">
                 {group.items.map((notification) => {
                   const Icon = NOTIF_ICONS[notification.type] || Bell
-                  const iconColor = NOTIF_COLORS[notification.type] || 'text-white/50'
+                  const iconColor = NOTIF_COLORS[notification.type] || 'text-gray-400'
                   const isUnread = !notification.read
 
                   return (
-                    <Card
+                    <div
                       key={notification.id}
-                      variant="glass"
-                      className={`transition-all ${
+                      className={`rounded-xl border transition-all p-4 ${
                         isUnread
-                          ? 'border-l-2 border-l-[#D4AF37] bg-white/[0.06]'
-                          : 'opacity-70'
+                          ? 'border-l-2 border-l-[#D4AF37] border-gray-100 bg-amber-50/30'
+                          : 'border-gray-50 opacity-70'
                       }`}
                     >
-                      <CardContent className="p-4">
-                        <div className="flex items-start gap-4">
-                          {/* Icon with gold dot for unread */}
-                          <div className="relative mt-0.5">
-                            <div
-                              className={`p-2 rounded-lg bg-white/[0.05] ${iconColor}`}
-                            >
-                              <Icon className="h-4 w-4" />
+                      <div className="flex items-start gap-4">
+                        {/* Icon with gold dot for unread */}
+                        <div className="relative mt-0.5">
+                          <div
+                            className={`p-2 rounded-lg bg-gray-50 ${iconColor}`}
+                          >
+                            <Icon className="h-4 w-4" />
+                          </div>
+                          {isUnread && (
+                            <div className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-[#D4AF37] border-2 border-white" />
+                          )}
+                        </div>
+
+                        {/* Content */}
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-start justify-between gap-3">
+                            <div className="min-w-0">
+                              <p
+                                className={`text-sm font-medium ${
+                                  isUnread ? 'text-gray-900' : 'text-gray-500'
+                                }`}
+                              >
+                                {notification.title}
+                              </p>
+                              {notification.body && (
+                                <p className="text-xs text-gray-400 mt-1 line-clamp-2">
+                                  {notification.body}
+                                </p>
+                              )}
                             </div>
+                            <span className="text-xs text-gray-300 shrink-0 mt-0.5">
+                              {timeAgo(notification.createdAt)}
+                            </span>
+                          </div>
+
+                          {/* Actions */}
+                          <div className="flex items-center gap-2 mt-2">
+                            {notification.href && (
+                              <Link href={notification.href}>
+                                <Button variant="ghost" size="sm" className="h-7 text-xs text-[#D4AF37] hover:text-[#C5A028]">
+                                  Voir <ExternalLink className="h-3 w-3 ml-1" />
+                                </Button>
+                              </Link>
+                            )}
                             {isUnread && (
-                              <div className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-[#D4AF37] border-2 border-[#0A0A0A]" />
+                              <form action={markNotificationReadAction.bind(null, notification.id)}>
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  type="submit"
+                                  className="h-7 text-xs text-gray-400 hover:text-gray-600"
+                                >
+                                  Marquer comme lu
+                                </Button>
+                              </form>
                             )}
                           </div>
-
-                          {/* Content */}
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-start justify-between gap-3">
-                              <div className="min-w-0">
-                                <p
-                                  className={`text-sm font-medium ${
-                                    isUnread ? 'text-white' : 'text-white/60'
-                                  }`}
-                                >
-                                  {notification.title}
-                                </p>
-                                {notification.body && (
-                                  <p className="text-xs text-white/40 mt-1 line-clamp-2">
-                                    {notification.body}
-                                  </p>
-                                )}
-                              </div>
-                              <span className="text-xs text-white/25 shrink-0 mt-0.5">
-                                {timeAgo(notification.createdAt)}
-                              </span>
-                            </div>
-
-                            {/* Actions */}
-                            <div className="flex items-center gap-2 mt-2">
-                              {notification.href && (
-                                <Link href={notification.href}>
-                                  <Button variant="ghost" size="sm" className="h-7 text-xs text-[#D4AF37] hover:text-[#F0D060]">
-                                    Voir <ExternalLink className="h-3 w-3 ml-1" />
-                                  </Button>
-                                </Link>
-                              )}
-                              {isUnread && (
-                                <form action={markNotificationReadAction.bind(null, notification.id)}>
-                                  <Button
-                                    variant="ghost"
-                                    size="sm"
-                                    type="submit"
-                                    className="h-7 text-xs text-white/30 hover:text-white/60"
-                                  >
-                                    Marquer comme lu
-                                  </Button>
-                                </form>
-                              )}
-                            </div>
-                          </div>
                         </div>
-                      </CardContent>
-                    </Card>
+                      </div>
+                    </div>
                   )
                 })}
               </div>

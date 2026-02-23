@@ -68,7 +68,7 @@ export function ContestStatusActions({ contestId, currentStatus }: { contestId: 
           {t.label}
         </Button>
       ))}
-      {error && <span className="text-xs text-red-400">{error}</span>}
+      {error && <span className="text-xs text-red-500">{error}</span>}
     </div>
   )
 }
@@ -105,7 +105,7 @@ export function ShortlistButton({ proposalIds }: { proposalIds: string[] }) {
         <Sparkles className="h-3.5 w-3.5" />
         Mettre en vote ({proposalIds.length})
       </Button>
-      {error && <span className="text-xs text-red-400">{error}</span>}
+      {error && <span className="text-xs text-red-500">{error}</span>}
     </div>
   )
 }
@@ -142,7 +142,7 @@ export function PickWinnerButton({ proposalId }: { proposalId: string }) {
         <Crown className="h-3.5 w-3.5" />
         Gagnant
       </Button>
-      {error && <span className="text-xs text-red-400">{error}</span>}
+      {error && <span className="text-xs text-red-500">{error}</span>}
     </div>
   )
 }
@@ -176,7 +176,7 @@ export function CreateContestForm({ films }: { films: { id: string; title: strin
   return (
     <div>
       {success && (
-        <div className="mb-4 p-3 rounded-lg bg-green-500/10 border border-green-500/20 text-green-400 text-sm flex items-center gap-2">
+        <div className="mb-4 p-3 rounded-lg bg-green-50 border border-green-200 text-green-600 text-sm flex items-center gap-2">
           <CheckCircle className="h-4 w-4" />
           Concours cree avec succes !
         </div>
@@ -188,14 +188,14 @@ export function CreateContestForm({ films }: { films: { id: string; title: strin
           Nouveau concours
         </Button>
       ) : (
-        <div className="p-5 rounded-xl border border-white/10 bg-white/[0.02]">
-          <h3 className="text-sm font-semibold mb-4 flex items-center gap-2">
+        <div className="p-5 rounded-xl border border-gray-200 bg-white">
+          <h3 className="text-sm font-semibold text-gray-900 mb-4 flex items-center gap-2">
             <Trophy className="h-4 w-4 text-[#D4AF37]" />
             Creer un concours
           </h3>
 
           {error && (
-            <div className="mb-3 p-2 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-xs">
+            <div className="mb-3 p-2 rounded-lg bg-red-50 border border-red-200 text-red-600 text-xs">
               {error}
             </div>
           )}
@@ -205,20 +205,20 @@ export function CreateContestForm({ films }: { films: { id: string; title: strin
             <Textarea name="description" rows={2} placeholder="Description (optionnel)" className="text-sm" />
             <select
               name="filmId"
-              className="flex h-9 w-full rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/50"
+              className="flex h-9 w-full rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/50"
             >
-              <option value="" className="bg-[#0A0A0A]">Film associe (optionnel)</option>
+              <option value="">Film associe (optionnel)</option>
               {films.map((f) => (
-                <option key={f.id} value={f.id} className="bg-[#0A0A0A]">{f.title}</option>
+                <option key={f.id} value={f.id}>{f.title}</option>
               ))}
             </select>
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="text-[10px] text-white/40 block mb-1">Date debut</label>
+                <label className="text-[10px] text-gray-400 block mb-1">Date debut</label>
                 <Input name="startDate" type="date" className="text-sm" />
               </div>
               <div>
-                <label className="text-[10px] text-white/40 block mb-1">Date fin</label>
+                <label className="text-[10px] text-gray-400 block mb-1">Date fin</label>
                 <Input name="endDate" type="date" className="text-sm" />
               </div>
             </div>

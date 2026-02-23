@@ -48,18 +48,18 @@ export function ScenarioVoteButton({
         <div className="relative group">
           <button
             disabled
-            className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium bg-white/5 text-white/30 border border-white/10 cursor-not-allowed"
+            className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium bg-gray-50 text-gray-300 border border-gray-200 cursor-not-allowed"
           >
             <Lock className="h-3.5 w-3.5" />
             <span className="tabular-nums font-bold">{votes}</span>
           </button>
           {/* Premium tooltip */}
-          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 rounded-lg bg-black/90 border border-[#D4AF37]/30 text-xs text-white/80 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10">
+          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 rounded-lg bg-white border border-[#D4AF37]/20 shadow-lg text-xs text-gray-700 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10">
             <div className="flex items-center gap-1.5">
               <Crown className="h-3 w-3 text-[#D4AF37]" />
               <span>Vote Premium (Starter+)</span>
             </div>
-            <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-[#D4AF37]/30" />
+            <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-[#D4AF37]/20" />
           </div>
         </div>
         <a
@@ -76,7 +76,7 @@ export function ScenarioVoteButton({
   if (hasVoted) {
     return (
       <div className="flex flex-col items-center gap-1">
-        <div className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium bg-[#D4AF37]/20 text-[#D4AF37] border border-[#D4AF37]/40">
+        <div className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium bg-[#D4AF37]/10 text-[#D4AF37] border border-[#D4AF37]/30">
           <CheckCircle className="h-4 w-4 fill-[#D4AF37]/30" />
           <span className="tabular-nums font-bold">{votes}</span>
         </div>
@@ -93,9 +93,9 @@ export function ScenarioVoteButton({
         disabled={isPending}
         className={cn(
           'group flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 cursor-pointer',
-          'bg-white/5 text-white/60 border border-white/10',
-          'hover:border-[#D4AF37]/40 hover:text-[#D4AF37] hover:bg-[#D4AF37]/10',
-          'hover:shadow-[0_0_20px_rgba(212,175,55,0.15)]',
+          'bg-gray-50 text-gray-500 border border-gray-200',
+          'hover:border-[#D4AF37]/40 hover:text-[#D4AF37] hover:bg-[#D4AF37]/5',
+          'hover:shadow-sm',
           isPending && 'opacity-60 pointer-events-none'
         )}
       >
@@ -109,7 +109,7 @@ export function ScenarioVoteButton({
         )}
       </button>
       {error && (
-        <p className="text-xs text-red-400 mt-1 text-center max-w-[200px]">{error}</p>
+        <p className="text-xs text-red-500 mt-1 text-center max-w-[200px]">{error}</p>
       )}
     </div>
   )

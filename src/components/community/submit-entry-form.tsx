@@ -24,24 +24,24 @@ export function SubmitEntryForm({ contestId }: SubmitEntryFormProps) {
   }, [state?.success])
 
   return (
-    <div className="rounded-2xl border border-[#D4AF37]/20 bg-[#D4AF37]/[0.03] overflow-hidden">
+    <div className="rounded-2xl border border-[#D4AF37]/20 bg-amber-50/30 overflow-hidden">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center justify-between p-5 hover:bg-[#D4AF37]/[0.02] transition-colors cursor-pointer"
+        className="w-full flex items-center justify-between p-5 hover:bg-amber-50/50 transition-colors cursor-pointer"
       >
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-[#D4AF37]/10 border border-[#D4AF37]/20 flex items-center justify-center">
+          <div className="w-10 h-10 rounded-xl bg-amber-50 border border-amber-100 flex items-center justify-center">
             <Upload className="h-5 w-5 text-[#D4AF37]" />
           </div>
           <div className="text-left">
-            <h3 className="font-semibold text-white">Participer au concours</h3>
-            <p className="text-sm text-white/40">Soumettez votre trailer pour ce concours</p>
+            <h3 className="font-semibold text-gray-900">Participer au concours</h3>
+            <p className="text-sm text-gray-500">Soumettez votre trailer pour ce concours</p>
           </div>
         </div>
         {isOpen ? (
-          <ChevronUp className="h-5 w-5 text-white/40" />
+          <ChevronUp className="h-5 w-5 text-gray-400" />
         ) : (
-          <ChevronDown className="h-5 w-5 text-white/40" />
+          <ChevronDown className="h-5 w-5 text-gray-400" />
         )}
       </button>
 
@@ -52,19 +52,19 @@ export function SubmitEntryForm({ contestId }: SubmitEntryFormProps) {
         )}
       >
         <div className="px-5 pb-5 pt-0">
-          <div className="border-t border-[#D4AF37]/10 pt-5">
+          <div className="border-t border-amber-100 pt-5">
             {state?.success && (
-              <div className="mb-4 p-4 rounded-xl bg-green-500/10 border border-green-500/20 flex items-center gap-3">
-                <CheckCircle className="h-5 w-5 text-green-400 shrink-0" />
+              <div className="mb-4 p-4 rounded-xl bg-green-50 border border-green-200 flex items-center gap-3">
+                <CheckCircle className="h-5 w-5 text-green-500 shrink-0" />
                 <div>
-                  <p className="text-sm font-medium text-green-400">Participation soumise !</p>
-                  <p className="text-xs text-green-400/60 mt-0.5">Votre trailer est en lice.</p>
+                  <p className="text-sm font-medium text-green-600">Participation soumise !</p>
+                  <p className="text-xs text-green-500 mt-0.5">Votre trailer est en lice.</p>
                 </div>
               </div>
             )}
 
             {state?.error && (
-              <div className="mb-4 p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-sm">
+              <div className="mb-4 p-3 rounded-lg bg-red-50 border border-red-200 text-red-600 text-sm">
                 {state.error}
               </div>
             )}
@@ -73,38 +73,38 @@ export function SubmitEntryForm({ contestId }: SubmitEntryFormProps) {
               <input type="hidden" name="contestId" value={contestId} />
 
               <div>
-                <label className="block text-xs font-medium text-white/50 mb-1.5">
+                <label className="block text-xs font-medium text-gray-500 mb-1.5">
                   Titre de votre trailer *
                 </label>
                 <Input
                   name="title"
                   required
                   placeholder="Ex: Lumiere Awakens — Teaser"
-                  className="bg-white/[0.03] border-white/10 focus:border-[#D4AF37]/40"
+                  className="bg-white border-gray-200 focus:border-[#D4AF37]/40"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-white/50 mb-1.5">
+                <label className="block text-xs font-medium text-gray-500 mb-1.5">
                   URL de la video
                 </label>
                 <Input
                   name="videoUrl"
                   type="url"
                   placeholder="https://youtube.com/watch?v=..."
-                  className="bg-white/[0.03] border-white/10 focus:border-[#D4AF37]/40"
+                  className="bg-white border-gray-200 focus:border-[#D4AF37]/40"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-white/50 mb-1.5">
+                <label className="block text-xs font-medium text-gray-500 mb-1.5">
                   URL de la miniature
                 </label>
                 <Input
                   name="thumbnailUrl"
                   type="url"
                   placeholder="https://..."
-                  className="bg-white/[0.03] border-white/10 focus:border-[#D4AF37]/40"
+                  className="bg-white border-gray-200 focus:border-[#D4AF37]/40"
                 />
               </div>
 

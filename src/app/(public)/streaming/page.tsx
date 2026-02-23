@@ -41,7 +41,7 @@ export default async function StreamingPage(props: { searchParams: Promise<{ gen
   ])
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A]">
+    <div className="cinema-dark min-h-screen bg-[#0A0A0A]">
       {/* Hero Banner */}
       {featured ? (
         <div className="relative h-[65vh] min-h-[450px] overflow-hidden">

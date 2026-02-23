@@ -89,24 +89,24 @@ export default async function CollabsMarketplacePage(
     <div className="space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-2xl sm:text-3xl font-bold text-white font-[family-name:var(--font-playfair)]">
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 font-[family-name:var(--font-playfair)]">
           Collabs & Growth
         </h1>
-        <p className="text-white/30 mt-1.5 text-sm">
+        <p className="text-gray-400 mt-1.5 text-sm">
           Trouvez des créateurs pour collaborer et grandir ensemble
         </p>
       </div>
 
       {/* Nav pills */}
-      <nav className="flex items-center gap-1.5 p-1 rounded-xl bg-white/[0.03] border border-white/[0.06] max-w-full overflow-x-auto scrollbar-thin">
+      <nav className="flex items-center gap-1.5 p-1 rounded-xl bg-gray-100 border border-gray-200 max-w-full overflow-x-auto scrollbar-thin">
         {navLinks.map((link) => (
           <Link
             key={link.href}
             href={link.href}
             className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all whitespace-nowrap min-h-[40px] ${
               link.active
-                ? 'bg-[#D4AF37]/15 text-[#D4AF37] shadow-sm'
-                : 'text-white/40 hover:text-white/60 hover:bg-white/[0.04]'
+                ? 'bg-[#D4AF37] text-white shadow-sm'
+                : 'text-gray-400 hover:text-gray-600 hover:bg-gray-50'
             }`}
           >
             <link.icon className="h-4 w-4" /> {link.label}
@@ -116,12 +116,12 @@ export default async function CollabsMarketplacePage(
 
       {/* Active collabs banner */}
       {myCollabs.length > 0 && (
-        <div className="flex items-center gap-3 p-4 rounded-xl bg-[#D4AF37]/[0.04] border border-[#D4AF37]/10">
+        <div className="flex items-center gap-3 p-4 rounded-xl bg-amber-50 border border-amber-100">
           <Handshake className="h-5 w-5 text-[#D4AF37] shrink-0" />
-          <p className="text-white/70 text-sm">
-            <span className="text-white font-medium">{myCollabs.length}</span> collab(s) en cours
+          <p className="text-gray-700 text-sm">
+            <span className="text-gray-900 font-medium">{myCollabs.length}</span> collab(s) en cours
           </p>
-          <Link href="/collabs/orders" className="ml-auto text-[#D4AF37] text-sm font-medium hover:text-[#F0D060] transition-colors">
+          <Link href="/collabs/orders" className="ml-auto text-[#D4AF37] text-sm font-medium hover:text-[#C5A028] transition-colors">
             Voir
           </Link>
         </div>
@@ -130,50 +130,50 @@ export default async function CollabsMarketplacePage(
       {/* Filters */}
       <form className="flex flex-col sm:flex-row items-stretch sm:items-end gap-3">
         <div className="flex-1 min-w-0 sm:min-w-[200px]">
-          <label className="block text-white/30 text-xs mb-1.5">Niche</label>
+          <label className="block text-gray-500 text-xs mb-1.5">Niche</label>
           <select
             name="niche"
             defaultValue={nicheFilter}
-            className="w-full h-11 rounded-xl border border-white/[0.06] bg-white/[0.03] px-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/30"
+            className="w-full h-11 rounded-xl border border-gray-200 bg-white px-3 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/30"
           >
-            <option value="" className="bg-[#111]">Toutes les niches</option>
+            <option value="">Toutes les niches</option>
             {allNiches.map((n) => (
-              <option key={n} value={n} className="bg-[#111]">{n}</option>
+              <option key={n} value={n}>{n}</option>
             ))}
           </select>
         </div>
         <div className="min-w-0 sm:min-w-[160px]">
-          <label className="block text-white/30 text-xs mb-1.5">Followers min.</label>
+          <label className="block text-gray-500 text-xs mb-1.5">Followers min.</label>
           <select
             name="minFollowers"
             defaultValue={minFollowers.toString()}
-            className="w-full h-11 rounded-xl border border-white/[0.06] bg-white/[0.03] px-3 text-sm text-white focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/30"
+            className="w-full h-11 rounded-xl border border-gray-200 bg-white px-3 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#D4AF37]/30"
           >
-            <option value="0" className="bg-[#111]">Tous</option>
-            <option value="1000" className="bg-[#111]">1K+</option>
-            <option value="10000" className="bg-[#111]">10K+</option>
-            <option value="100000" className="bg-[#111]">100K+</option>
+            <option value="0">Tous</option>
+            <option value="1000">1K+</option>
+            <option value="10000">10K+</option>
+            <option value="100000">100K+</option>
           </select>
         </div>
         <button
           type="submit"
-          className="h-11 px-6 bg-[#D4AF37] text-black font-semibold rounded-xl hover:bg-[#F0D060] transition-colors inline-flex items-center gap-2"
+          className="h-11 px-6 bg-[#D4AF37] text-white font-semibold rounded-xl hover:bg-[#C5A028] transition-colors inline-flex items-center gap-2"
         >
           <Filter className="h-4 w-4" /> Filtrer
         </button>
       </form>
 
       {/* Results count */}
-      <p className="text-white/30 text-sm">{filteredCreators.length} créateur(s) disponible(s)</p>
+      <p className="text-gray-400 text-sm">{filteredCreators.length} créateur(s) disponible(s)</p>
 
       {/* Creators Grid */}
       {filteredCreators.length === 0 ? (
         <div className="py-20 text-center">
-          <div className="h-16 w-16 rounded-2xl bg-white/[0.03] flex items-center justify-center mx-auto mb-5">
-            <Users className="h-8 w-8 text-white/10" />
+          <div className="h-16 w-16 rounded-2xl bg-gray-50 flex items-center justify-center mx-auto mb-5">
+            <Users className="h-8 w-8 text-gray-200" />
           </div>
-          <h3 className="text-white/50 text-lg font-medium mb-2">Aucun créateur trouvé</h3>
-          <p className="text-white/25 text-sm max-w-sm mx-auto">
+          <h3 className="text-gray-500 text-lg font-medium mb-2">Aucun créateur trouvé</h3>
+          <p className="text-gray-400 text-sm max-w-sm mx-auto">
             Ajustez vos filtres ou revenez plus tard. De nouveaux créateurs rejoignent la plateforme chaque jour.
           </p>
         </div>
@@ -185,52 +185,50 @@ export default async function CollabsMarketplacePage(
 
             return (
               <Link key={creator.id} href={`/collabs/${creator.id}`}>
-                <Card className="bg-white/[0.02] border-white/[0.06] hover:border-[#D4AF37]/20 hover:bg-white/[0.04] transition-all cursor-pointer h-full group">
-                  <CardContent className="p-5 space-y-4">
-                    {/* Header */}
-                    <div className="flex items-center gap-3">
-                      <Avatar className="h-12 w-12">
-                        {creator.avatarUrl && <AvatarImage src={creator.avatarUrl} alt={profile.stageName || ''} />}
-                        <AvatarFallback className="text-sm">
-                          {getInitials(profile.stageName || creator.displayName || 'CR')}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-white font-semibold truncate">
-                          {profile.stageName || creator.displayName || 'Créateur'}
-                        </p>
-                        <p className="text-white/30 text-sm truncate">
-                          {profile.niche || 'Multi-niche'}
-                        </p>
-                      </div>
+                <div className="bg-white rounded-2xl shadow-sm border border-gray-100 hover:border-[#D4AF37]/30 hover:shadow-md transition-all cursor-pointer h-full group p-5 space-y-4">
+                  {/* Header */}
+                  <div className="flex items-center gap-3">
+                    <Avatar className="h-12 w-12">
+                      {creator.avatarUrl && <AvatarImage src={creator.avatarUrl} alt={profile.stageName || ''} />}
+                      <AvatarFallback className="text-sm bg-amber-50 text-[#D4AF37]">
+                        {getInitials(profile.stageName || creator.displayName || 'CR')}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-gray-900 font-semibold truncate">
+                        {profile.stageName || creator.displayName || 'Créateur'}
+                      </p>
+                      <p className="text-gray-400 text-sm truncate">
+                        {profile.niche || 'Multi-niche'}
+                      </p>
                     </div>
+                  </div>
 
-                    {/* Key info */}
-                    <div className="flex items-center gap-4 text-sm">
-                      <div className="flex items-center gap-1.5 text-white/40">
-                        <Eye className="h-3.5 w-3.5" />
-                        <span>{creator.totalFollowers.toLocaleString()}</span>
-                      </div>
-                      <Badge
-                        className="text-[10px]"
-                        style={{
-                          borderColor: `${badge.color}30`,
-                          backgroundColor: `${badge.color}10`,
-                          color: badge.color,
-                        }}
-                      >
-                        {badge.label}
-                      </Badge>
+                  {/* Key info */}
+                  <div className="flex items-center gap-4 text-sm">
+                    <div className="flex items-center gap-1.5 text-gray-400">
+                      <Eye className="h-3.5 w-3.5" />
+                      <span>{creator.totalFollowers.toLocaleString()}</span>
                     </div>
+                    <Badge
+                      className="text-[10px]"
+                      style={{
+                        borderColor: `${badge.color}30`,
+                        backgroundColor: `${badge.color}10`,
+                        color: badge.color,
+                      }}
+                    >
+                      {badge.label}
+                    </Badge>
+                  </div>
 
-                    {/* CTA */}
-                    <div className="pt-3 border-t border-white/5">
-                      <span className="text-[#D4AF37] text-sm font-medium opacity-60 group-hover:opacity-100 transition-opacity">
-                        Collaborer
-                      </span>
-                    </div>
-                  </CardContent>
-                </Card>
+                  {/* CTA */}
+                  <div className="pt-3 border-t border-gray-100">
+                    <span className="text-[#D4AF37] text-sm font-medium opacity-60 group-hover:opacity-100 transition-opacity">
+                      Collaborer
+                    </span>
+                  </div>
+                </div>
               </Link>
             )
           })}

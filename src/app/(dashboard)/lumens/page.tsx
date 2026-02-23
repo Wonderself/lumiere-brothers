@@ -14,15 +14,15 @@ export const metadata: Metadata = { title: 'Mes Lumens' }
 function getTxTypeBadge(type: string) {
   switch (type) {
     case 'PURCHASE':
-      return <Badge className="border-blue-500/30 bg-blue-500/10 text-blue-400">Achat</Badge>
+      return <Badge className="border-blue-200 bg-blue-50 text-blue-600">Achat</Badge>
     case 'BONUS':
-      return <Badge className="border-purple-500/30 bg-purple-500/10 text-purple-400">Bonus</Badge>
+      return <Badge className="border-purple-200 bg-purple-50 text-purple-600">Bonus</Badge>
     case 'TASK_REWARD':
-      return <Badge className="border-green-500/30 bg-green-500/10 text-green-400">Reward</Badge>
+      return <Badge className="border-green-200 bg-green-50 text-green-600">Reward</Badge>
     case 'SPENT':
-      return <Badge className="border-yellow-500/30 bg-yellow-500/10 text-yellow-400">Depense</Badge>
+      return <Badge className="border-yellow-200 bg-yellow-50 text-yellow-600">Depense</Badge>
     case 'WITHDRAWAL':
-      return <Badge className="border-red-500/30 bg-red-500/10 text-red-400">Retrait</Badge>
+      return <Badge className="border-red-200 bg-red-50 text-red-600">Retrait</Badge>
     default:
       return <Badge variant="secondary">{type}</Badge>
   }
@@ -56,23 +56,23 @@ export default async function LumensPage() {
     <div className="p-8 space-y-8 max-w-5xl mx-auto">
       {/* Page Title */}
       <div>
-        <h1 className="text-3xl font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>
+        <h1 className="text-3xl font-bold text-gray-900" style={{ fontFamily: 'var(--font-playfair)' }}>
           Mes Lumens
         </h1>
-        <p className="text-white/50 mt-1">
+        <p className="text-gray-500 mt-1">
           Gerez votre portefeuille de Lumens — la monnaie de la plateforme.
         </p>
       </div>
 
       {/* Balance Card */}
-      <Card variant="gold" className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#D4AF37]/5 via-transparent to-[#D4AF37]/3 pointer-events-none" />
-        <CardContent className="p-8 md:p-12 flex flex-col items-center text-center relative">
-          <div className="w-16 h-16 rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/30 flex items-center justify-center mb-6">
+      <div className="relative overflow-hidden bg-white rounded-2xl shadow-sm border border-[#D4AF37]/20">
+        <div className="absolute inset-0 bg-gradient-to-br from-amber-50 via-transparent to-amber-50/30 pointer-events-none" />
+        <div className="p-8 md:p-12 flex flex-col items-center text-center relative">
+          <div className="w-16 h-16 rounded-full bg-amber-50 border border-[#D4AF37]/20 flex items-center justify-center mb-6">
             <Sun className="h-8 w-8 text-[#D4AF37]" />
           </div>
           <h2
-            className="text-lg font-semibold text-white/70 mb-2"
+            className="text-lg font-semibold text-gray-600 mb-2"
             style={{ fontFamily: 'var(--font-playfair)' }}
           >
             Mes Lumens
@@ -80,83 +80,83 @@ export default async function LumensPage() {
           <div className="text-6xl md:text-7xl font-bold text-[#D4AF37] mb-3 tracking-tight">
             {user.lumenBalance.toLocaleString('fr-FR')}
           </div>
-          <p className="text-white/40 text-sm">
+          <p className="text-gray-400 text-sm">
             1 Lumen = {lumenPrice}&#8364; — Votre porte-monnaie plateforme
           </p>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {/* Purchase Section */}
-      <Card variant="glass">
-        <CardHeader>
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100">
+        <div className="p-6 pb-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-[#D4AF37]/10 border border-[#D4AF37]/20 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-lg bg-amber-50 border border-amber-100 flex items-center justify-center">
               <ShoppingCart className="h-5 w-5 text-[#D4AF37]" />
             </div>
             <div>
-              <CardTitle
-                className="text-xl"
+              <h2
+                className="text-xl font-bold text-gray-900"
                 style={{ fontFamily: 'var(--font-playfair)' }}
               >
                 Acheter des Lumens
-              </CardTitle>
-              <p className="text-white/40 text-sm mt-0.5">
+              </h2>
+              <p className="text-gray-400 text-sm mt-0.5">
                 Choisissez un pack — plus vous achetez, plus vous economisez.
               </p>
             </div>
           </div>
-        </CardHeader>
-        <CardContent>
+        </div>
+        <div className="px-6 pb-6">
           <PurchaseForm />
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {/* Withdraw Section */}
-      <Card variant="glass">
-        <CardHeader>
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100">
+        <div className="p-6 pb-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-green-500/10 border border-green-500/20 flex items-center justify-center">
-              <ArrowDownCircle className="h-5 w-5 text-green-400" />
+            <div className="w-10 h-10 rounded-lg bg-green-50 border border-green-100 flex items-center justify-center">
+              <ArrowDownCircle className="h-5 w-5 text-green-500" />
             </div>
             <div>
-              <CardTitle
-                className="text-xl"
+              <h2
+                className="text-xl font-bold text-gray-900"
                 style={{ fontFamily: 'var(--font-playfair)' }}
               >
                 Convertir en euros
-              </CardTitle>
-              <p className="text-white/40 text-sm mt-0.5">
+              </h2>
+              <p className="text-gray-400 text-sm mt-0.5">
                 Vos Lumens seront convertis en euros et vires sous 14 jours ouvres. 0 frais.
               </p>
             </div>
           </div>
-        </CardHeader>
-        <CardContent>
+        </div>
+        <div className="px-6 pb-6">
           <WithdrawForm currentBalance={user.lumenBalance} />
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {/* Transaction History */}
-      <Card variant="glass">
-        <CardHeader>
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100">
+        <div className="p-6 pb-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center">
-              <Sparkles className="h-5 w-5 text-white/60" />
+            <div className="w-10 h-10 rounded-lg bg-gray-50 border border-gray-200 flex items-center justify-center">
+              <Sparkles className="h-5 w-5 text-gray-500" />
             </div>
-            <CardTitle
-              className="text-xl"
+            <h2
+              className="text-xl font-bold text-gray-900"
               style={{ fontFamily: 'var(--font-playfair)' }}
             >
               Historique
-            </CardTitle>
+            </h2>
           </div>
-        </CardHeader>
-        <CardContent>
+        </div>
+        <div className="px-6 pb-6">
           {transactions.length === 0 ? (
             <div className="text-center py-12">
-              <Gift className="h-10 w-10 text-white/20 mx-auto mb-3" />
-              <p className="text-white/40">Aucune transaction pour le moment.</p>
-              <p className="text-white/25 text-sm mt-1">
+              <Gift className="h-10 w-10 text-gray-200 mx-auto mb-3" />
+              <p className="text-gray-500">Aucune transaction pour le moment.</p>
+              <p className="text-gray-400 text-sm mt-1">
                 Achetez vos premiers Lumens ou completez une tache pour commencer.
               </p>
             </div>
@@ -164,32 +164,32 @@ export default async function LumensPage() {
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-white/10 text-left">
-                    <th className="pb-3 text-xs text-white/40 font-medium">Date</th>
-                    <th className="pb-3 text-xs text-white/40 font-medium">Type</th>
-                    <th className="pb-3 text-xs text-white/40 font-medium">Description</th>
-                    <th className="pb-3 text-xs text-white/40 font-medium text-right">Montant</th>
+                  <tr className="border-b border-gray-100 text-left">
+                    <th className="pb-3 text-xs text-gray-400 font-medium">Date</th>
+                    <th className="pb-3 text-xs text-gray-400 font-medium">Type</th>
+                    <th className="pb-3 text-xs text-gray-400 font-medium">Description</th>
+                    <th className="pb-3 text-xs text-gray-400 font-medium text-right">Montant</th>
                   </tr>
                 </thead>
                 <tbody>
                   {transactions.map((tx) => (
                     <tr
                       key={tx.id}
-                      className="border-b border-white/5 hover:bg-white/[0.02] transition-colors"
+                      className="border-b border-gray-50 hover:bg-gray-50 transition-colors"
                     >
-                      <td className="py-3 pr-4 text-sm text-white/60 whitespace-nowrap">
+                      <td className="py-3 pr-4 text-sm text-gray-600 whitespace-nowrap">
                         {formatDateShort(tx.createdAt)}
                       </td>
                       <td className="py-3 pr-4">
                         {getTxTypeBadge(tx.type)}
                       </td>
-                      <td className="py-3 pr-4 text-sm text-white/70 max-w-xs truncate">
+                      <td className="py-3 pr-4 text-sm text-gray-700 max-w-xs truncate">
                         {tx.description || '—'}
                       </td>
                       <td className="py-3 text-right">
                         <span
                           className={`text-sm font-semibold ${
-                            tx.amount > 0 ? 'text-green-400' : 'text-red-400'
+                            tx.amount > 0 ? 'text-green-500' : 'text-red-500'
                           }`}
                         >
                           {tx.amount > 0 ? '+' : ''}{tx.amount}
@@ -201,8 +201,8 @@ export default async function LumensPage() {
               </table>
             </div>
           )}
-        </CardContent>
-      </Card>
+        </div>
+      </div>
     </div>
   )
 }

@@ -55,7 +55,7 @@ export default async function StreamingFilmPage(props: { params: Promise<{ slug:
   })
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A]">
+    <div className="cinema-dark min-h-screen bg-[#0A0A0A]">
       {/* Video Player Area */}
       <div className="relative bg-black aspect-video max-h-[70vh] w-full">
         {film.videoUrl ? (

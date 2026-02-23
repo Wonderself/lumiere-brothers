@@ -17,12 +17,12 @@ export function LumensCounter() {
   return (
     <Link
       href="/lumens"
-      className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm text-white/50 hover:text-[#D4AF37] hover:bg-[#D4AF37]/5 transition-all"
+      className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm text-gray-500 hover:text-[#D4AF37] hover:bg-amber-50 transition-all"
     >
       <Sun className="h-4 w-4 text-[#D4AF37]" />
       <span className="font-medium">
         {lumens === null ? (
-          <span className="inline-block w-6 h-4 rounded bg-white/10 animate-pulse" />
+          <span className="inline-block w-6 h-4 rounded bg-gray-100 animate-pulse" />
         ) : (
           lumens.toLocaleString('fr-FR')
         )}

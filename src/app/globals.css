@@ -1,30 +1,69 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0A0A0A;
-  --foreground: #FAFAFA;
+  /* Light mode base colors */
+  --background: #FFFFFF;
+  --background-secondary: #F8F9FA;
+  --background-tertiary: #F1F3F5;
+  --foreground: #1A1A2E;
+  --foreground-secondary: #4A4A68;
+  --foreground-muted: #8E8EA0;
   --gold: #D4AF37;
   --gold-light: #F0D060;
   --gold-dark: #A0831A;
+  --card: #FFFFFF;
+  --card-border: #E8E8ED;
+  --muted: #8E8EA0;
+
+  /* Accent palette */
+  --accent-blue: #3B82F6;
+  --accent-purple: #8B5CF6;
+  --accent-green: #10B981;
+  --accent-rose: #F43F5E;
+
+  /* Light mode glassmorphism tokens */
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-bg-hover: rgba(255, 255, 255, 0.85);
+  --glass-bg-strong: rgba(255, 255, 255, 0.9);
+  --glass-border: rgba(0, 0, 0, 0.06);
+  --glass-border-hover: rgba(212, 175, 55, 0.2);
+  --glass-border-strong: rgba(0, 0, 0, 0.1);
+  --glass-blur: blur(16px);
+  --glass-blur-heavy: blur(32px);
+
+  /* Light mode depth shadows */
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.05), 0 4px 16px rgba(0, 0, 0, 0.04);
+  --shadow-elevated: 0 4px 24px rgba(0, 0, 0, 0.08);
+  --shadow-gold: 0 4px 24px rgba(212, 175, 55, 0.12);
+  --shadow-gold-intense: 0 4px 32px rgba(212, 175, 55, 0.2);
+}
+
+/* Cinema dark scope — restores dark tokens for streaming pages */
+.cinema-dark {
+  --background: #0A0A0A;
+  --background-secondary: #111111;
+  --background-tertiary: #1A1A1A;
+  --foreground: #FAFAFA;
+  --foreground-secondary: #CCCCCC;
+  --foreground-muted: #888888;
   --card: #111111;
   --card-border: #222222;
   --muted: #888888;
 
-  /* Glassmorphism tokens */
   --glass-bg: rgba(255, 255, 255, 0.04);
   --glass-bg-hover: rgba(255, 255, 255, 0.07);
   --glass-bg-strong: rgba(255, 255, 255, 0.08);
   --glass-border: rgba(212, 175, 55, 0.12);
   --glass-border-hover: rgba(212, 175, 55, 0.25);
   --glass-border-strong: rgba(212, 175, 55, 0.3);
-  --glass-blur: blur(16px);
-  --glass-blur-heavy: blur(32px);
 
-  /* Depth shadows */
+  --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.4), 0 1px 0 rgba(255, 255, 255, 0.03) inset;
+  --shadow-elevated: 0 16px 48px rgba(0, 0, 0, 0.5), 0 1px 0 rgba(255, 255, 255, 0.05) inset;
   --shadow-gold: 0 0 40px rgba(212, 175, 55, 0.1);
   --shadow-gold-intense: 0 0 60px rgba(212, 175, 55, 0.2);
-  --shadow-card: 0 8px 32px rgba(0,0,0,0.4), 0 1px 0 rgba(255,255,255,0.03) inset;
-  --shadow-elevated: 0 16px 48px rgba(0,0,0,0.5), 0 1px 0 rgba(255,255,255,0.05) inset;
+
+  color: #FAFAFA;
+  background: #0A0A0A;
 }
 
 @theme inline {
@@ -120,13 +159,13 @@ body {
   background: rgba(212, 175, 55, 0.05);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
-  border: 1px solid rgba(212, 175, 55, 0.2);
+  border: 1px solid rgba(212, 175, 55, 0.15);
   box-shadow: var(--shadow-gold), var(--shadow-card);
 }
 
 .glass-gold:hover {
   background: rgba(212, 175, 55, 0.08);
-  border-color: rgba(212, 175, 55, 0.35);
+  border-color: rgba(212, 175, 55, 0.25);
   box-shadow: var(--shadow-gold-intense), var(--shadow-card);
 }
 
@@ -145,11 +184,11 @@ body {
    ======================================== */
 
 .gradient-radial-gold {
-  background: radial-gradient(ellipse at 50% 0%, rgba(212, 175, 55, 0.15) 0%, transparent 60%);
+  background: radial-gradient(ellipse at 50% 0%, rgba(212, 175, 55, 0.08) 0%, transparent 60%);
 }
 
 .gradient-radial-gold-bottom {
-  background: radial-gradient(ellipse at 50% 100%, rgba(212, 175, 55, 0.1) 0%, transparent 50%);
+  background: radial-gradient(ellipse at 50% 100%, rgba(212, 175, 55, 0.06) 0%, transparent 50%);
 }
 
 .noise-overlay::after {
@@ -157,7 +196,7 @@ body {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: 0.03;
+  opacity: 0.02;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
   border-radius: inherit;
 }
@@ -185,7 +224,7 @@ body {
 }
 
 /* ========================================
-   SCROLLBAR
+   SCROLLBAR (light mode)
    ======================================== */
 
 ::-webkit-scrollbar {
@@ -196,7 +235,7 @@ body {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.1);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
@@ -208,18 +247,26 @@ body {
   height: 4px;
 }
 .scrollbar-thin::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(0, 0, 0, 0.06);
   border-radius: 2px;
 }
 .scrollbar-thin::-webkit-scrollbar-track {
   background: transparent;
 }
 
+/* Cinema dark scrollbar */
+.cinema-dark ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+}
+.cinema-dark .scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.06);
+}
+
 /* ========================================
-   FILM GRAIN OVERLAY
+   FILM GRAIN OVERLAY (cinema-dark only)
    ======================================== */
 
-.film-grain::before {
+.cinema-dark .film-grain::before {
   content: '';
   position: fixed;
   top: 0;
@@ -300,6 +347,11 @@ body {
    ======================================== */
 
 ::selection {
+  background: rgba(212, 175, 55, 0.2);
+  color: #1A1A2E;
+}
+
+.cinema-dark ::selection {
   background: rgba(212, 175, 55, 0.3);
   color: #FAFAFA;
 }

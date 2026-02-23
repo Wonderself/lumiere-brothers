@@ -12,20 +12,20 @@ const footerLinks = {
     { href: '/roadmap', label: 'Roadmap' },
   ],
   creators: [
-    { href: '/register', label: 'Créer un compte' },
-    { href: '/register?role=SCREENWRITER', label: 'Soumettre un scénario' },
-    { href: '/community', label: 'Communauté' },
+    { href: '/register', label: 'Creer un compte' },
+    { href: '/register?role=SCREENWRITER', label: 'Soumettre un scenario' },
+    { href: '/community', label: 'Communaute' },
     { href: '/community/contests', label: 'Concours' },
-    { href: '/about', label: 'Comment ça marche' },
+    { href: '/about', label: 'Comment ca marche' },
   ],
   legal: [
     { href: '/legal/terms', label: 'CGU' },
-    { href: '/legal/privacy', label: 'Confidentialité' },
+    { href: '/legal/privacy', label: 'Confidentialite' },
     { href: '/legal/cookies', label: 'Cookies' },
   ],
   contact: [
     { href: 'mailto:contact@lumiere.film', label: 'contact@lumiere.film' },
-    { href: '/about', label: 'À propos' },
+    { href: '/about', label: 'A propos' },
   ],
 }
 
@@ -37,7 +37,7 @@ const socialLinks = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-white/5 bg-[#0A0A0A] mt-20">
+    <footer className="bg-[#1A1A2E] border-t-2 border-[#D4AF37] mt-20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 lg:gap-12">
           {/* Brand */}
@@ -48,7 +48,7 @@ export function Footer() {
                 LUMIERE
               </span>
             </Link>
-            <p className="text-sm text-white/40 leading-relaxed max-w-xs">
+            <p className="text-sm text-white/50 leading-relaxed max-w-xs">
               La plateforme de production collaborative pour le cinema IA. Creez, collaborez, investissez.
             </p>
             {/* Social Links */}
@@ -60,7 +60,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.label}
-                  className="w-9 h-9 rounded-lg bg-white/[0.04] border border-white/[0.06] flex items-center justify-center text-white/30 hover:text-[#D4AF37] hover:border-[#D4AF37]/20 hover:bg-[#D4AF37]/5 transition-all duration-200"
+                  className="w-9 h-9 rounded-full bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-white/40 hover:text-[#D4AF37] hover:border-[#D4AF37]/30 hover:bg-[#D4AF37]/10 transition-all duration-200"
                 >
                   <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
                     <path d={social.svg} />
@@ -72,11 +72,11 @@ export function Footer() {
 
           {/* Platform */}
           <div className="space-y-3">
-            <h4 className="text-sm font-semibold text-white/70 uppercase tracking-wider">Plateforme</h4>
+            <h4 className="text-sm font-semibold text-white/80 uppercase tracking-wider">Plateforme</h4>
             <ul className="space-y-2.5">
               {footerLinks.platform.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="text-sm text-white/35 hover:text-white/70 transition-colors duration-200">
+                  <Link href={link.href} className="text-sm text-white/40 hover:text-[#D4AF37] transition-colors duration-200">
                     {link.label}
                   </Link>
                 </li>
@@ -86,11 +86,11 @@ export function Footer() {
 
           {/* Creators */}
           <div className="space-y-3">
-            <h4 className="text-sm font-semibold text-white/70 uppercase tracking-wider">Createurs</h4>
+            <h4 className="text-sm font-semibold text-white/80 uppercase tracking-wider">Createurs</h4>
             <ul className="space-y-2.5">
               {footerLinks.creators.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="text-sm text-white/35 hover:text-white/70 transition-colors duration-200">
+                  <Link href={link.href} className="text-sm text-white/40 hover:text-[#D4AF37] transition-colors duration-200">
                     {link.label}
                   </Link>
                 </li>
@@ -100,11 +100,11 @@ export function Footer() {
 
           {/* Legal */}
           <div className="space-y-3">
-            <h4 className="text-sm font-semibold text-white/70 uppercase tracking-wider">Legal</h4>
+            <h4 className="text-sm font-semibold text-white/80 uppercase tracking-wider">Legal</h4>
             <ul className="space-y-2.5">
               {footerLinks.legal.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="text-sm text-white/35 hover:text-white/70 transition-colors duration-200">
+                  <Link href={link.href} className="text-sm text-white/40 hover:text-[#D4AF37] transition-colors duration-200">
                     {link.label}
                   </Link>
                 </li>
@@ -114,11 +114,11 @@ export function Footer() {
 
           {/* Contact */}
           <div className="space-y-3">
-            <h4 className="text-sm font-semibold text-white/70 uppercase tracking-wider">Contact</h4>
+            <h4 className="text-sm font-semibold text-white/80 uppercase tracking-wider">Contact</h4>
             <ul className="space-y-2.5">
               {footerLinks.contact.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="text-sm text-white/35 hover:text-white/70 transition-colors duration-200">
+                  <Link href={link.href} className="text-sm text-white/40 hover:text-[#D4AF37] transition-colors duration-200">
                     {link.label}
                   </Link>
                 </li>
@@ -128,11 +128,11 @@ export function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-12 pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-white/20">
+        <div className="mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-xs text-white/30">
             &copy; {currentYear} Lumiere Brothers Pictures. Tous droits reserves.
           </p>
-          <p className="text-xs text-white/15">
+          <p className="text-xs text-white/20">
             Propulse par Next.js &middot; PostgreSQL &middot; Claude IA
           </p>
         </div>

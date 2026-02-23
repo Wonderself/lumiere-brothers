@@ -60,21 +60,21 @@ const STATUS_CONFIG: Record<string, {
     label: 'Ouvert',
     variant: 'success',
     sectionTitle: 'Ouverts',
-    sectionIcon: <Trophy className="h-5 w-5 text-green-400" />,
+    sectionIcon: <Trophy className="h-5 w-5 text-green-500" />,
     cardVariant: 'default',
   },
   UPCOMING: {
     label: 'A venir',
     variant: 'warning',
     sectionTitle: 'A Venir',
-    sectionIcon: <Calendar className="h-5 w-5 text-yellow-400" />,
+    sectionIcon: <Calendar className="h-5 w-5 text-yellow-500" />,
     cardVariant: 'default',
   },
   CLOSED: {
     label: 'Termine',
     variant: 'secondary',
     sectionTitle: 'Termines',
-    sectionIcon: <Film className="h-5 w-5 text-white/40" />,
+    sectionIcon: <Film className="h-5 w-5 text-gray-400" />,
     cardVariant: 'default',
   },
 }
@@ -98,32 +98,32 @@ export default async function ContestsPage() {
   )
 
   return (
-    <div className="min-h-screen py-16 px-4">
+    <div className="min-h-screen py-16 px-4 bg-white">
       <div className="container mx-auto max-w-5xl">
 
         {/* Header */}
         <div className="text-center mb-16">
           <div className="flex items-center justify-center gap-3 mb-4">
             <Trophy className="h-10 w-10 text-[#D4AF37]" />
-            <h1 className="text-5xl font-bold" style={{ fontFamily: 'var(--font-playfair)' }}>
+            <h1 className="text-5xl font-bold text-gray-900" style={{ fontFamily: 'var(--font-playfair)' }}>
               Concours
             </h1>
           </div>
-          <p className="text-white/50 text-lg max-w-xl mx-auto">
+          <p className="text-gray-500 text-lg max-w-xl mx-auto">
             Creez des trailers, participez aux competitions et montrez votre talent a la communaute.
           </p>
           <Link
             href="/community"
-            className="inline-flex items-center gap-1 text-sm text-[#D4AF37] mt-4 hover:text-[#F0D060] transition-colors"
+            className="inline-flex items-center gap-1 text-sm text-[#D4AF37] mt-4 hover:text-[#C4A030] transition-colors"
           >
             &larr; Retour a la communaute
           </Link>
         </div>
 
         {allContests.length === 0 ? (
-          <div className="text-center py-24 text-white/30">
+          <div className="text-center py-24 text-gray-400">
             <Trophy className="h-16 w-16 mx-auto mb-4 opacity-30" />
-            <p className="text-xl">Aucun concours disponible</p>
+            <p className="text-xl text-gray-500">Aucun concours disponible</p>
             <p className="text-sm mt-2">Les premiers concours arrivent bientot !</p>
           </div>
         ) : (
@@ -136,7 +136,7 @@ export default async function ContestsPage() {
                 <section key={status}>
                   <div className="flex items-center gap-3 mb-6">
                     {config.sectionIcon}
-                    <h2 className="text-xl font-bold">{config.sectionTitle}</h2>
+                    <h2 className="text-xl font-bold text-gray-900">{config.sectionTitle}</h2>
                     <Badge variant={config.variant}>{contests.length}</Badge>
                   </div>
 
@@ -148,13 +148,13 @@ export default async function ContestsPage() {
 
                       return (
                         <Link key={contest.id} href={`/community/contests/${contest.id}`}>
-                          <Card variant={config.cardVariant} className="h-full group cursor-pointer">
+                          <Card variant={config.cardVariant} className="h-full group cursor-pointer border-gray-100 bg-white shadow-sm hover:shadow-md transition-shadow">
                             <CardContent className="p-6">
                               {/* Top row */}
                               <div className="flex items-start justify-between mb-4">
                                 <Badge variant={config.variant}>{config.label}</Badge>
                                 {daysLeft !== null && status !== 'CLOSED' && (
-                                  <div className={`flex items-center gap-1 text-xs ${daysLeft <= 3 ? 'text-red-400' : daysLeft <= 7 ? 'text-orange-400' : 'text-white/30'}`}>
+                                  <div className={`flex items-center gap-1 text-xs ${daysLeft <= 3 ? 'text-red-500' : daysLeft <= 7 ? 'text-orange-500' : 'text-gray-400'}`}>
                                     <Timer className="h-3 w-3" />
                                     {daysLeft === 0 ? 'Dernier jour !' : `${daysLeft}j`}
                                   </div>
@@ -162,25 +162,25 @@ export default async function ContestsPage() {
                               </div>
 
                               {/* Title & description */}
-                              <h3 className="text-lg font-semibold mb-2 group-hover:text-[#D4AF37] transition-colors">
+                              <h3 className="text-lg font-semibold mb-2 text-gray-900 group-hover:text-[#D4AF37] transition-colors">
                                 {contest.title}
                               </h3>
                               {contest.description && (
-                                <p className="text-sm text-white/40 line-clamp-2 mb-4">
+                                <p className="text-sm text-gray-500 line-clamp-2 mb-4">
                                   {contest.description}
                                 </p>
                               )}
 
                               {/* Prize */}
                               {contest.prizeDescription && (
-                                <div className="flex items-center gap-2 text-xs text-[#D4AF37]/80 mb-3 p-2 rounded-lg bg-[#D4AF37]/5 border border-[#D4AF37]/10">
+                                <div className="flex items-center gap-2 text-xs text-[#D4AF37] mb-3 p-2 rounded-lg bg-[#D4AF37]/[0.04] border border-[#D4AF37]/10">
                                   <Gift className="h-3.5 w-3.5 shrink-0" />
                                   <span className="truncate">{contest.prizeDescription}</span>
                                 </div>
                               )}
 
                               {/* Meta */}
-                              <div className="flex items-center gap-4 text-xs text-white/30 border-t border-white/5 pt-3 mt-3">
+                              <div className="flex items-center gap-4 text-xs text-gray-400 border-t border-gray-100 pt-3 mt-3">
                                 {contest.film && (
                                   <span className="flex items-center gap-1">
                                     <Clapperboard className="h-3 w-3" />
@@ -201,7 +201,7 @@ export default async function ContestsPage() {
 
                               {/* Winner badge for closed contests */}
                               {status === 'CLOSED' && contest.entries[0] && (
-                                <div className="mt-3 flex items-center gap-2 text-xs text-[#D4AF37] p-2 rounded-lg bg-[#D4AF37]/5 border border-[#D4AF37]/10">
+                                <div className="mt-3 flex items-center gap-2 text-xs text-[#D4AF37] p-2 rounded-lg bg-[#D4AF37]/[0.04] border border-[#D4AF37]/10">
                                   <Trophy className="h-3.5 w-3.5 shrink-0" />
                                   <span>Gagnant : <strong>{contest.entries[0].user.displayName}</strong> — {contest.entries[0].title}</span>
                                 </div>
@@ -209,7 +209,7 @@ export default async function ContestsPage() {
 
                               {/* CTA arrow */}
                               <div className="flex justify-end mt-3">
-                                <ArrowRight className="h-4 w-4 text-white/20 group-hover:text-[#D4AF37] transition-colors" />
+                                <ArrowRight className="h-4 w-4 text-gray-300 group-hover:text-[#D4AF37] transition-colors" />
                               </div>
                             </CardContent>
                           </Card>

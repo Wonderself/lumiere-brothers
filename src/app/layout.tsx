@@ -62,18 +62,18 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="fr" className="dark">
-      <body className={`${inter.variable} ${playfair.variable} antialiased bg-[#0A0A0A] text-white`}>
+    <html lang="fr">
+      <body className={`${inter.variable} ${playfair.variable} antialiased bg-white text-[#1A1A2E]`}>
         <AuthSessionProvider>
         {children}
         <CookieBanner />
         <Toaster
-          theme="dark"
+          theme="light"
           toastOptions={{
             style: {
-              background: '#111111',
-              border: '1px solid #222222',
-              color: '#FAFAFA',
+              background: '#FFFFFF',
+              border: '1px solid #E8E8ED',
+              color: '#1A1A2E',
             },
           }}
         />

@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Roadmap',
-  description: 'Plan de développement de la plateforme Lumière — toutes les phases et fonctionnalités.',
+  description: 'Plan de developpement de la plateforme Lumiere — toutes les phases et fonctionnalites.',
 }
 
 type RoadmapItem = {
@@ -146,9 +146,9 @@ const roadmap: Phase[] = [
 ]
 
 const STATUS_CONFIG = {
-  done: { icon: CheckCircle, color: 'text-green-400', bg: 'bg-green-500/10 border-green-500/20', dotColor: 'bg-green-400', label: 'Termine' },
+  done: { icon: CheckCircle, color: 'text-green-500', bg: 'bg-green-50 border-green-200', dotColor: 'bg-green-500', label: 'Termine' },
   in_progress: { icon: Clock, color: 'text-[#D4AF37]', bg: 'bg-[#D4AF37]/10 border-[#D4AF37]/20', dotColor: 'bg-[#D4AF37]', label: 'En cours' },
-  todo: { icon: Circle, color: 'text-white/30', bg: 'bg-white/5 border-white/10', dotColor: 'bg-white/20', label: 'A faire' },
+  todo: { icon: Circle, color: 'text-gray-400', bg: 'bg-gray-50 border-gray-200', dotColor: 'bg-gray-300', label: 'A faire' },
 }
 
 const DIFFICULTY_STARS: Record<string, number> = {
@@ -159,15 +159,15 @@ const DIFFICULTY_STARS: Record<string, number> = {
 }
 
 const DIFFICULTY_COLORS: Record<string, string> = {
-  easy: 'text-green-400',
-  medium: 'text-yellow-400',
-  hard: 'text-orange-400',
-  expert: 'text-red-400',
+  easy: 'text-green-500',
+  medium: 'text-yellow-500',
+  hard: 'text-orange-500',
+  expert: 'text-red-500',
 }
 
 function DifficultyStars({ difficulty }: { difficulty: string }) {
   const count = DIFFICULTY_STARS[difficulty] || 1
-  const color = DIFFICULTY_COLORS[difficulty] || 'text-white/30'
+  const color = DIFFICULTY_COLORS[difficulty] || 'text-gray-400'
   return (
     <span className={`inline-flex items-center gap-0.5 ${color}`}>
       {Array.from({ length: count }).map((_, i) => (
@@ -183,16 +183,15 @@ export default function RoadmapPage() {
   const inProgressItems = roadmap.flatMap((p) => p.items).filter((i) => i.status === 'in_progress').length
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-white">
       {/* ================================================================ */}
       {/* HERO SECTION                                                     */}
       {/* ================================================================ */}
-      <section className="relative pt-24 pb-16 px-4 overflow-hidden">
+      <section className="relative pt-24 pb-16 px-4 overflow-hidden bg-gradient-to-b from-gray-50 to-white">
         {/* Ambient blur circles */}
         <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
           <div className="absolute top-20 left-1/4 w-96 h-96 bg-[#D4AF37]/[0.03] rounded-full blur-[120px]" />
           <div className="absolute top-10 right-1/3 w-72 h-72 bg-[#D4AF37]/[0.04] rounded-full blur-[100px]" />
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[250px] bg-purple-900/[0.05] rounded-full blur-[150px]" />
           {/* Gold particles */}
           <div className="absolute top-[20%] left-[18%] w-1 h-1 rounded-full bg-[#D4AF37]/40 animate-pulse" />
           <div className="absolute top-[30%] right-[22%] w-1.5 h-1.5 rounded-full bg-[#D4AF37]/30 animate-pulse [animation-delay:0.5s]" />
@@ -209,7 +208,7 @@ export default function RoadmapPage() {
 
           {/* Title */}
           <h1
-            className="text-4xl sm:text-5xl md:text-6xl font-bold mb-5"
+            className="text-4xl sm:text-5xl md:text-6xl font-bold mb-5 text-gray-900"
             style={{ fontFamily: 'var(--font-playfair)' }}
           >
             Roadmap{' '}
@@ -226,27 +225,27 @@ export default function RoadmapPage() {
           </h1>
 
           {/* Subtitle */}
-          <p className="text-white/40 text-lg max-w-2xl mx-auto mb-12 leading-relaxed">
+          <p className="text-gray-500 text-lg max-w-2xl mx-auto mb-12 leading-relaxed">
             7 phases pour une plateforme de production cinema IA complete.
           </p>
 
           {/* Global progress card */}
-          <div className="inline-flex flex-col items-center gap-3 p-6 rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm">
+          <div className="inline-flex flex-col items-center gap-3 p-6 rounded-2xl border border-gray-100 bg-white shadow-sm">
             <div
               className="text-4xl font-bold text-[#D4AF37]"
               style={{ fontFamily: 'var(--font-playfair)' }}
             >
               {doneItems} / {totalItems}
             </div>
-            <div className="text-white/50 text-sm">fonctionnalites completees</div>
-            <div className="w-64 h-2 bg-white/10 rounded-full overflow-hidden">
+            <div className="text-gray-500 text-sm">fonctionnalites completees</div>
+            <div className="w-64 h-2 bg-gray-100 rounded-full overflow-hidden">
               <div
                 className="h-full bg-gradient-to-r from-[#D4AF37] to-[#F0D060] rounded-full"
                 style={{ width: `${(doneItems / totalItems) * 100}%` }}
               />
             </div>
-            <div className="flex gap-6 text-xs text-white/40">
-              <span className="text-green-400">{doneItems} termines</span>
+            <div className="flex gap-6 text-xs text-gray-400">
+              <span className="text-green-500">{doneItems} termines</span>
               <span className="text-[#D4AF37]">{inProgressItems} en cours</span>
               <span>{totalItems - doneItems - inProgressItems} a faire</span>
             </div>
@@ -254,7 +253,7 @@ export default function RoadmapPage() {
         </div>
 
         {/* Bottom separator */}
-        <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#D4AF37]/10 to-transparent" />
+        <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
       </section>
 
       {/* ================================================================ */}
@@ -277,36 +276,36 @@ export default function RoadmapPage() {
                   <div key={phase.id} className="relative">
                     {/* Timeline dot */}
                     <div className="absolute left-6 -translate-x-1/2 top-0 hidden md:flex items-center justify-center">
-                      <div className={`w-3 h-3 rounded-full ${phaseConfig.dotColor} ring-4 ring-[#0A0A0A]`} />
+                      <div className={`w-3 h-3 rounded-full ${phaseConfig.dotColor} ring-4 ring-white`} />
                       {phase.status === 'in_progress' && (
                         <div className="absolute w-5 h-5 rounded-full bg-[#D4AF37]/20 animate-ping" />
                       )}
                     </div>
 
-                    {/* Phase content — offset for timeline rail */}
+                    {/* Phase content */}
                     <div className="md:ml-16">
-                      {/* Phase Header — gradient background */}
-                      <div className="rounded-2xl border border-white/[0.06] bg-gradient-to-r from-white/[0.04] to-white/[0.01] p-5 mb-6">
+                      {/* Phase Header */}
+                      <div className="rounded-2xl border border-gray-100 bg-gradient-to-r from-gray-50 to-white p-5 mb-6 shadow-sm">
                         <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-3">
                           <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-semibold ${phaseConfig.bg} ${phaseConfig.color} shrink-0 w-fit`}>
                             <phaseConfig.icon className="h-4 w-4" />
                             {phase.version} — {phase.name}
                           </div>
                           <div className="flex-1 hidden sm:block">
-                            <div className="h-px bg-white/5" />
+                            <div className="h-px bg-gray-100" />
                           </div>
-                          <span className="text-sm text-white/30 shrink-0">{phaseDone}/{phase.items.length}</span>
+                          <span className="text-sm text-gray-400 shrink-0">{phaseDone}/{phase.items.length}</span>
                         </div>
 
-                        <p className="text-white/40 text-sm mb-4">{phase.description}</p>
+                        <p className="text-gray-500 text-sm mb-4">{phase.description}</p>
 
                         {/* Phase progress bar */}
-                        <div className="h-1.5 bg-white/5 rounded-full overflow-hidden">
+                        <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
                           <div
                             className={`h-full rounded-full transition-all duration-1000 ${
                               phase.status === 'done' ? 'bg-green-500' :
                               phase.status === 'in_progress' ? 'bg-gradient-to-r from-[#D4AF37] to-[#F0D060]' :
-                              'bg-white/10'
+                              'bg-gray-200'
                             }`}
                             style={{ width: `${phaseProgress}%` }}
                           />
@@ -321,17 +320,17 @@ export default function RoadmapPage() {
                           return (
                             <div
                               key={item.id}
-                              className={`flex items-start gap-3 p-4 rounded-xl border transition-all ${itemConfig.bg}`}
+                              className={`flex items-start gap-3 p-4 rounded-xl border transition-all ${itemConfig.bg} shadow-sm`}
                             >
                               <itemConfig.icon className={`h-5 w-5 mt-0.5 shrink-0 ${itemConfig.color}`} />
                               <div className="flex-1 min-w-0">
                                 <div className="flex items-center gap-2 mb-1">
-                                  <p className={`text-sm font-medium ${item.status === 'done' ? 'text-white/60 line-through' : 'text-white'}`}>
+                                  <p className={`text-sm font-medium ${item.status === 'done' ? 'text-gray-400 line-through' : 'text-gray-900'}`}>
                                     {item.title}
                                   </p>
                                   <DifficultyStars difficulty={item.difficulty} />
                                 </div>
-                                <p className="text-xs text-white/30 leading-relaxed">{item.description}</p>
+                                <p className="text-xs text-gray-400 leading-relaxed">{item.description}</p>
                               </div>
                             </div>
                           )
@@ -345,8 +344,8 @@ export default function RoadmapPage() {
           </div>
 
           {/* Footer note */}
-          <div className="mt-16 p-6 rounded-2xl border border-white/[0.06] bg-white/[0.02] text-center">
-            <p className="text-white/40 text-sm">
+          <div className="mt-16 p-6 rounded-2xl border border-gray-100 bg-gray-50 text-center shadow-sm">
+            <p className="text-gray-500 text-sm">
               Cette roadmap est mise a jour en continu. Duree totale estimee : 21-27 jours de developpement.
               <br />
               Chemin critique : V1 → V2 → V3 → V7 (13-17 jours pour un MVP monetisable).

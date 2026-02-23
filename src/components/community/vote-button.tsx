@@ -43,8 +43,8 @@ export function VoteButton({ entryId, currentVotes, hasVoted: initialHasVoted }:
         className={cn(
           'group relative flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300',
           hasVoted
-            ? 'bg-[#D4AF37]/20 text-[#D4AF37] border border-[#D4AF37]/40 cursor-default'
-            : 'bg-white/5 text-white/60 border border-white/10 hover:border-[#D4AF37]/40 hover:text-[#D4AF37] hover:bg-[#D4AF37]/10 cursor-pointer',
+            ? 'bg-[#D4AF37]/10 text-[#D4AF37] border border-[#D4AF37]/30 cursor-default'
+            : 'bg-gray-50 text-gray-500 border border-gray-200 hover:border-[#D4AF37]/40 hover:text-[#D4AF37] hover:bg-[#D4AF37]/5 cursor-pointer',
           isPending && 'opacity-60 pointer-events-none'
         )}
       >
@@ -69,7 +69,7 @@ export function VoteButton({ entryId, currentVotes, hasVoted: initialHasVoted }:
         )}
       </button>
       {error && (
-        <p className="text-xs text-red-400 mt-1 text-center max-w-[200px]">{error}</p>
+        <p className="text-xs text-red-500 mt-1 text-center max-w-[200px]">{error}</p>
       )}
     </div>
   )
