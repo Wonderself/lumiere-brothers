@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next'
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = process.env.NEXT_PUBLIC_URL || 'https://lumiere.film'
+  const baseUrl = process.env.NEXT_PUBLIC_URL || 'https://creators.lumiere.film'
 
   return {
     rules: [

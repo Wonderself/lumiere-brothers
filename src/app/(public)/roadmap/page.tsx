@@ -1,9 +1,10 @@
-import { CheckCircle, Clock, Circle, Rocket, Star } from 'lucide-react'
+import { CheckCircle, Clock, Circle, ChevronRight, Rocket, Sparkles, Zap, PartyPopper, Star } from 'lucide-react'
+import Link from 'next/link'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Roadmap',
-  description: 'Plan de developpement de la plateforme Lumiere — toutes les phases et fonctionnalites.',
+  title: 'Roadmap — Lumière Creators',
+  description: 'Plan de développement de Lumière Creators — outils IA, micro-tâches guidées, marketplace. Chaque étape est concrète et réaliste.',
 }
 
 type RoadmapItem = {
@@ -11,7 +12,8 @@ type RoadmapItem = {
   title: string
   description: string
   status: 'done' | 'in_progress' | 'todo'
-  difficulty: 'easy' | 'medium' | 'hard' | 'expert'
+  difficulty: 'trivial' | 'easy' | 'medium' | 'guided'
+  note?: string
 }
 
 type Phase = {
@@ -20,6 +22,7 @@ type Phase = {
   version: string
   description: string
   status: 'done' | 'in_progress' | 'todo'
+  emoji: string
   items: RoadmapItem[]
 }
 
@@ -28,187 +31,153 @@ const roadmap: Phase[] = [
     id: 'v1',
     name: 'Fondations',
     version: 'V1',
-    description: 'Infrastructure de base, auth, DB, UI, Admin.',
-    status: 'in_progress',
+    description: 'Infrastructure, authentification, UI complète, panel admin, marketplace de base. Le socle est prêt.',
+    status: 'done',
+    emoji: '🏗️',
     items: [
-      { id: 'v1-1', title: 'Projet Next.js 15 + TypeScript', description: 'Setup complet avec App Router, Tailwind CSS, shadcn/ui', status: 'done', difficulty: 'easy' },
-      { id: 'v1-2', title: 'Schema Prisma + PostgreSQL', description: 'Modeles complets : Users, Films, Tasks, Submissions, Payments', status: 'done', difficulty: 'medium' },
-      { id: 'v1-3', title: 'Authentification NextAuth.js v5', description: 'Login email/password, middleware de protection des routes', status: 'done', difficulty: 'medium' },
-      { id: 'v1-4', title: 'Landing Page', description: 'Hero, stats, films en prod, features, CTA, footer', status: 'done', difficulty: 'medium' },
-      { id: 'v1-5', title: 'Catalogue Films', description: 'Liste filtrable, pages detail avec phases et taches', status: 'done', difficulty: 'medium' },
-      { id: 'v1-6', title: 'Inscription / Connexion', description: 'Formulaires avec selection de competences, langues, role', status: 'done', difficulty: 'medium' },
-      { id: 'v1-7', title: 'Dashboard Contributeur', description: 'Stats perso, taches en cours, recommandations', status: 'done', difficulty: 'medium' },
-      { id: 'v1-8', title: 'Marketplace de Taches (basique)', description: 'Liste filtree, detail tache, claim simple', status: 'done', difficulty: 'medium' },
-      { id: 'v1-9', title: 'Admin Panel', description: 'CRUD films, taches, users, reviews queue, settings', status: 'done', difficulty: 'hard' },
-      { id: 'v1-10', title: 'Page Roadmap', description: 'Cette page !', status: 'done', difficulty: 'easy' },
-      { id: 'v1-11', title: 'Script de Seed', description: 'Donnees de demo : admin, 2 films, phases, taches', status: 'done', difficulty: 'easy' },
-      { id: 'v1-12', title: 'Docker Compose', description: 'PostgreSQL 16 + Redis 7 pour le dev local', status: 'done', difficulty: 'easy' },
+      { id: 'v1-1', title: 'Next.js 16 + TypeScript + Tailwind', description: 'App Router, design system light, composants UI modernes', status: 'done', difficulty: 'trivial' },
+      { id: 'v1-2', title: 'Base de données PostgreSQL + Prisma 7', description: 'Users, Tasks, Submissions, Payments, Films, Analytics', status: 'done', difficulty: 'easy' },
+      { id: 'v1-3', title: 'Authentification NextAuth v5', description: 'Login/register, JWT, rôles créateur/client/admin', status: 'done', difficulty: 'easy' },
+      { id: 'v1-4', title: 'Landing Page créateurs', description: 'Hero, 3 piliers, outils, marketplace, collaboration, CTA', status: 'done', difficulty: 'easy' },
+      { id: 'v1-5', title: 'Marketplace micro-tâches', description: '5 catégories, filtres, détail tâche, claim, soumission', status: 'done', difficulty: 'easy' },
+      { id: 'v1-6', title: 'Dashboard contributeur', description: 'Stats, tâches en cours, revenus, recommandations', status: 'done', difficulty: 'easy' },
+      { id: 'v1-7', title: 'Panel Admin complet', description: 'CRUD tâches/users, queue de review, settings, analytics', status: 'done', difficulty: 'medium' },
+      { id: 'v1-8', title: 'Pages publiques', description: 'À propos, roadmap, leaderboard, legal, streaming', status: 'done', difficulty: 'easy' },
+      { id: 'v1-9', title: 'Docker + Seed + Dev tools', description: 'PostgreSQL, Redis, données de démo, Prisma Studio', status: 'done', difficulty: 'trivial' },
     ],
   },
   {
     id: 'v2',
-    name: 'Marketplace & IA',
+    name: 'Briefs IA & Guidage',
     version: 'V2',
-    description: 'Upload fichiers, validation IA Claude, dependances DAG, emails.',
-    status: 'todo',
+    description: 'Chaque tâche devient ultra-guidée : brief détaillé, étapes numérotées, exemples visuels, outils recommandés.',
+    status: 'in_progress',
+    emoji: '🧭',
     items: [
-      { id: 'v2-1', title: 'Upload fichiers (tus protocol)', description: 'Upload resumable de fichiers lourds, stockage S3/MinIO', status: 'todo', difficulty: 'hard' },
-      { id: 'v2-2', title: 'Validation IA des soumissions', description: 'Integration Claude API, scoring automatique, feedback', status: 'todo', difficulty: 'hard' },
-      { id: 'v2-3', title: 'Systeme de dependances (DAG)', description: 'Deverrouillage automatique des taches selon les dependances', status: 'todo', difficulty: 'hard' },
-      { id: 'v2-4', title: 'Timer 48h sur les taches', description: 'Auto-release si non soumis dans les delais (BullMQ)', status: 'todo', difficulty: 'medium' },
-      { id: 'v2-5', title: 'Taches cascade/danse (video)', description: 'Validation video, extraction keyframes, transcoding HLS', status: 'todo', difficulty: 'expert' },
-      { id: 'v2-6', title: 'Generation automatique de taches IA', description: "L'admin entre un synopsis, l'IA decoupe en taches", status: 'todo', difficulty: 'hard' },
-      { id: 'v2-7', title: 'Emails transactionnels', description: 'Resend + react-email : bienvenue, validation, paiement...', status: 'todo', difficulty: 'medium' },
-      { id: 'v2-8', title: 'Recherche MeiliSearch', description: 'Recherche full-text sur films et taches', status: 'todo', difficulty: 'medium' },
-      { id: 'v2-9', title: 'Rate limiting Redis', description: 'Protection API contre les abus', status: 'todo', difficulty: 'medium' },
+      { id: 'v2-1', title: 'Briefs détaillés par tâche', description: 'Chaque micro-tâche a un brief pro : contexte, objectif, livrables attendus', status: 'in_progress', difficulty: 'easy', note: 'Template réutilisable' },
+      { id: 'v2-2', title: 'Étapes guidées numérotées', description: 'Chaque tâche découpée en 3-7 étapes claires, avec captures d\'écran', status: 'todo', difficulty: 'easy' },
+      { id: 'v2-3', title: 'Outils IA recommandés', description: 'Suggestions d\'outils par catégorie : Midjourney, Runway, ElevenLabs...', status: 'todo', difficulty: 'trivial' },
+      { id: 'v2-4', title: 'Exemples visuels (avant/après)', description: 'Galerie d\'exemples de livrables validés pour chaque type de tâche', status: 'todo', difficulty: 'easy' },
+      { id: 'v2-5', title: 'Niveaux de difficulté', description: 'Débutant / Intermédiaire / Expert — filtrage et recommandation', status: 'todo', difficulty: 'trivial' },
+      { id: 'v2-6', title: 'Validation IA des soumissions', description: 'Claude analyse le livrable, feedback constructif, score qualité', status: 'todo', difficulty: 'medium', note: 'API Claude intégrée' },
     ],
   },
   {
     id: 'v3',
-    name: 'Paiements & Blockchain',
+    name: 'Outils Créateurs',
     version: 'V3',
-    description: 'Stripe, Bitcoin Lightning, smart contracts Base L2.',
+    description: 'Suite d\'outils IA pour les créateurs : génération, planning, analytics, collaboration.',
     status: 'todo',
+    emoji: '🛠️',
     items: [
-      { id: 'v3-1', title: 'Stripe Connect', description: 'Paiements aux contributeurs via Stripe Transfer', status: 'todo', difficulty: 'hard' },
-      { id: 'v3-2', title: 'Bitcoin Lightning (BTCPay)', description: 'Paiement instantane en satoshis via Lightning Network', status: 'todo', difficulty: 'hard' },
-      { id: 'v3-3', title: 'Smart Contract ERC-1155 Soulbound', description: 'Co-production avec tokens non-transferables sur Base L2', status: 'todo', difficulty: 'expert' },
-      { id: 'v3-4', title: 'Wallet Connect (RainbowKit)', description: 'MetaMask, Coinbase Wallet, WalletConnect', status: 'todo', difficulty: 'hard' },
-      { id: 'v3-5', title: 'Page de co-production', description: "Investir dans un film, recevoir des perks et % revenus", status: 'todo', difficulty: 'hard' },
-      { id: 'v3-6', title: 'Admin paiements', description: 'Vue globale des paiements, export CSV', status: 'todo', difficulty: 'medium' },
+      { id: 'v3-1', title: 'Studio de génération vidéo', description: 'Interface simple pour générer des vidéos IA avec prompts guidés', status: 'todo', difficulty: 'medium' },
+      { id: 'v3-2', title: 'Éditeur de thumbnails', description: 'Création rapide de miniatures avec templates et IA', status: 'todo', difficulty: 'easy' },
+      { id: 'v3-3', title: 'Planning de contenu', description: 'Calendrier éditorial avec suggestions IA et rappels', status: 'todo', difficulty: 'easy' },
+      { id: 'v3-4', title: 'Analytics créateur', description: 'Revenus, performances, progression, comparaison mensuelle', status: 'todo', difficulty: 'easy' },
+      { id: 'v3-5', title: 'Brief IA personnalisé', description: 'L\'IA génère un brief adapté au profil et aux compétences du créateur', status: 'todo', difficulty: 'medium' },
     ],
   },
   {
     id: 'v4',
-    name: 'Streaming & Spectateurs',
+    name: 'Paiements & Revenus',
     version: 'V4',
-    description: 'Player HLS, transcoding FFmpeg, abonnements.',
+    description: 'Les créateurs sont payés. Stripe, factures, transparence totale.',
     status: 'todo',
+    emoji: '💰',
     items: [
-      { id: 'v4-1', title: 'Pipeline FFmpeg → HLS', description: 'Transcoding multi-bitrate (360p/720p/1080p/4K)', status: 'todo', difficulty: 'expert' },
-      { id: 'v4-2', title: 'Player Video.js', description: 'HLS adaptive, qualite manuelle, sous-titres, PiP', status: 'todo', difficulty: 'hard' },
-      { id: 'v4-3', title: 'Espace Spectateur /watch', description: 'Catalogue films released, page film avec player', status: 'todo', difficulty: 'medium' },
-      { id: 'v4-4', title: 'Abonnements Stripe', description: 'Plans FREE / BASIC 2€ / PREMIUM 5€', status: 'todo', difficulty: 'hard' },
-      { id: 'v4-5', title: 'Sous-titres multi-langues', description: 'Upload .srt/.vtt ou generation Whisper API', status: 'todo', difficulty: 'medium' },
-      { id: 'v4-6', title: 'Soumission films externes', description: 'Evaluation IA des films soumis par la communaute', status: 'todo', difficulty: 'hard' },
+      { id: 'v4-1', title: 'Stripe Connect', description: 'Paiement automatique après validation de chaque tâche', status: 'todo', difficulty: 'medium', note: 'Guide Stripe pas à pas' },
+      { id: 'v4-2', title: 'Dashboard revenus', description: 'Historique des gains, solde disponible, demande de retrait', status: 'todo', difficulty: 'easy' },
+      { id: 'v4-3', title: 'Facturation automatique', description: 'Factures PDF générées pour chaque paiement reçu', status: 'todo', difficulty: 'easy' },
+      { id: 'v4-4', title: 'Plans clients premium', description: 'Abonnements pour clients : accès prioritaire, support dédié', status: 'todo', difficulty: 'medium', note: 'Réutilise Stripe' },
     ],
   },
   {
     id: 'v5',
-    name: 'Gamification & Communaute',
+    name: 'Collaboration & Communauté',
     version: 'V5',
-    description: 'Points, niveaux, badges, leaderboard, votes, concours.',
+    description: 'Marketplace de collabs, profils publics, concours, gamification.',
     status: 'todo',
+    emoji: '🤝',
     items: [
-      { id: 'v5-1', title: 'Systeme de points & niveaux', description: 'Points par tache, progression ROOKIE→VIP automatique', status: 'todo', difficulty: 'medium' },
-      { id: 'v5-2', title: '13 badges & achievements', description: 'Premiere Lumiere, Perfectionniste, Marathonien...', status: 'todo', difficulty: 'medium' },
-      { id: 'v5-3', title: 'Leaderboard public', description: 'Top contributeurs global, mensuel, par film', status: 'todo', difficulty: 'medium' },
-      { id: 'v5-4', title: 'Profils publics contributeurs', description: 'Portfolio, filmographie, badges, partage social', status: 'todo', difficulty: 'medium' },
-      { id: 'v5-5', title: 'Votes communautaires', description: 'Voter pour le prochain film a produire', status: 'todo', difficulty: 'easy' },
-      { id: 'v5-6', title: 'Concours automatises', description: 'Concours mensuels avec resultats automatiques', status: 'todo', difficulty: 'hard' },
-      { id: 'v5-7', title: 'Systeme de parrainage', description: 'Liens uniques, bonus parrain/filleul', status: 'todo', difficulty: 'medium' },
-      { id: 'v5-8', title: 'Images OG dynamiques', description: 'Generation image de partage personnalisee (Vercel OG)', status: 'todo', difficulty: 'medium' },
+      { id: 'v5-1', title: 'Marketplace de collaborations', description: 'Poster des projets, trouver des créateurs, proposer des collabs', status: 'todo', difficulty: 'medium' },
+      { id: 'v5-2', title: 'Profils publics créateurs', description: 'Portfolio, compétences, badges, avis clients, contact', status: 'todo', difficulty: 'easy' },
+      { id: 'v5-3', title: 'Points & niveaux', description: 'ROOKIE → PRO → EXPERT → VIP, progression automatique', status: 'todo', difficulty: 'easy' },
+      { id: 'v5-4', title: 'Badges & achievements', description: '13 badges de reconnaissance : Premier Livrable, Marathonien...', status: 'todo', difficulty: 'easy' },
+      { id: 'v5-5', title: 'Concours mensuels', description: 'Thèmes créatifs, votes communauté, prix en cash', status: 'todo', difficulty: 'medium' },
+      { id: 'v5-6', title: 'Parrainage', description: 'Invitez des créateurs, bonus parrain et filleul', status: 'todo', difficulty: 'easy' },
     ],
   },
   {
     id: 'v6',
-    name: 'Soumission Scenarios',
+    name: 'Clients & Commandes',
     version: 'V6',
-    description: 'Evaluation IA des scenarios, deal de co-production.',
+    description: 'Les clients commandent des services IA. Formulaires, suivi, livraison, satisfaction.',
     status: 'todo',
+    emoji: '🛒',
     items: [
-      { id: 'v6-1', title: 'Formulaire soumission scenario', description: 'Wizard 4 etapes : infos, upload, tolerance IA, confirmation', status: 'todo', difficulty: 'medium' },
-      { id: 'v6-2', title: 'Evaluation IA scenarios', description: 'Score sur 5 criteres, radar chart, feedback', status: 'todo', difficulty: 'hard' },
-      { id: 'v6-3', title: 'Negociation interactive', description: 'Slider tolerance IA, diff view des modifications proposees', status: 'todo', difficulty: 'hard' },
-      { id: 'v6-4', title: 'Deal automatise', description: 'Contrat, % revenus, credit generique pour scenario accepte', status: 'todo', difficulty: 'medium' },
-      { id: 'v6-5', title: 'Admin gestion scenarios', description: 'Review, override score, lancer production', status: 'todo', difficulty: 'medium' },
+      { id: 'v6-1', title: 'Formulaire de commande guidé', description: 'Le client décrit son besoin → l\'IA découpe en micro-tâches', status: 'todo', difficulty: 'medium' },
+      { id: 'v6-2', title: 'Suivi de commande en temps réel', description: 'Progression, étapes, prévisualisation, messagerie', status: 'todo', difficulty: 'easy' },
+      { id: 'v6-3', title: 'Système d\'avis et notation', description: '5 étoiles + commentaire après livraison', status: 'todo', difficulty: 'easy' },
+      { id: 'v6-4', title: 'Matching IA créateur-client', description: 'Recommandation du meilleur créateur pour chaque commande', status: 'todo', difficulty: 'medium' },
     ],
   },
   {
     id: 'v7',
-    name: 'Polish & Lancement',
+    name: 'Lancement Production',
     version: 'V7',
-    description: 'Securite, SEO, performance, legal, deploiement prod.',
+    description: 'Sécurité, SEO, performance, déploiement. La plateforme est live.',
     status: 'todo',
+    emoji: '🚀',
     items: [
-      { id: 'v7-1', title: 'Rate limiting Redis (sliding window)', description: 'Protection contre les abus sur toutes les API routes', status: 'todo', difficulty: 'medium' },
-      { id: 'v7-2', title: 'Validation Zod complete', description: "Validation cote client ET serveur sur tous les formulaires", status: 'todo', difficulty: 'medium' },
-      { id: 'v7-3', title: 'Securite upload', description: 'MIME type reel, taille max, scan antivirus basique', status: 'todo', difficulty: 'hard' },
-      { id: 'v7-4', title: 'SEO complet', description: 'Metadata dynamique, sitemap.xml, robots.txt, OG images', status: 'todo', difficulty: 'medium' },
-      { id: 'v7-5', title: 'Cache Redis', description: 'ISR sur pages publiques, cache leaderboard/catalogue', status: 'todo', difficulty: 'medium' },
-      { id: 'v7-6', title: 'Monitoring Sentry', description: 'Error tracking, alertes, dashboard performance', status: 'todo', difficulty: 'easy' },
-      { id: 'v7-7', title: 'Pages legales (RGPD)', description: 'CGU, confidentialite, cookies en FR + EN', status: 'todo', difficulty: 'easy' },
-      { id: 'v7-8', title: 'Mode maintenance', description: 'Toggle admin pour afficher une page de maintenance', status: 'todo', difficulty: 'easy' },
-      { id: 'v7-9', title: 'Backup DB automatique', description: 'pg_dump quotidien vers S3 via cron job', status: 'todo', difficulty: 'medium' },
-      { id: 'v7-10', title: 'Dockerfile + deploy Coolify', description: 'Multi-stage build, docker-compose.prod.yml, README deploy', status: 'todo', difficulty: 'hard' },
+      { id: 'v7-1', title: 'Déploiement Vercel', description: 'HTTPS automatique, CDN mondial, preview branches', status: 'todo', difficulty: 'trivial', note: '3 clics + guide' },
+      { id: 'v7-2', title: 'SEO complet', description: 'Metadata, sitemap, robots.txt, JSON-LD, Open Graph', status: 'todo', difficulty: 'easy' },
+      { id: 'v7-3', title: 'Performance & cache', description: 'Redis ISR, images optimisées, Lighthouse 90+', status: 'todo', difficulty: 'easy' },
+      { id: 'v7-4', title: 'Sécurité', description: 'Rate limiting, validation Zod, CSP headers', status: 'todo', difficulty: 'medium' },
+      { id: 'v7-5', title: 'Monitoring', description: 'Sentry error tracking, alertes temps réel', status: 'todo', difficulty: 'trivial', note: 'SDK en 2 lignes' },
+      { id: 'v7-6', title: 'Pages légales RGPD', description: 'CGU, confidentialité, cookies — FR + EN', status: 'todo', difficulty: 'trivial' },
+      { id: 'v7-7', title: 'DNS & domaine', description: 'creators.lumiere.film configuré', status: 'todo', difficulty: 'easy', note: 'Guide fourni' },
     ],
   },
 ]
 
 const STATUS_CONFIG = {
-  done: { icon: CheckCircle, color: 'text-green-500', bg: 'bg-green-50 border-green-200', dotColor: 'bg-green-500', label: 'Termine' },
+  done: { icon: CheckCircle, color: 'text-green-500', bg: 'bg-green-50 border-green-200', dotColor: 'bg-green-500', label: 'Terminé' },
   in_progress: { icon: Clock, color: 'text-[#D4AF37]', bg: 'bg-[#D4AF37]/10 border-[#D4AF37]/20', dotColor: 'bg-[#D4AF37]', label: 'En cours' },
-  todo: { icon: Circle, color: 'text-gray-400', bg: 'bg-gray-50 border-gray-200', dotColor: 'bg-gray-300', label: 'A faire' },
+  todo: { icon: Circle, color: 'text-gray-400', bg: 'bg-gray-50 border-gray-200', dotColor: 'bg-gray-300', label: 'À faire' },
 }
 
-const DIFFICULTY_STARS: Record<string, number> = {
-  easy: 1,
-  medium: 2,
-  hard: 3,
-  expert: 4,
-}
-
-const DIFFICULTY_COLORS: Record<string, string> = {
-  easy: 'text-green-500',
-  medium: 'text-yellow-500',
-  hard: 'text-orange-500',
-  expert: 'text-red-500',
-}
-
-function DifficultyStars({ difficulty }: { difficulty: string }) {
-  const count = DIFFICULTY_STARS[difficulty] || 1
-  const color = DIFFICULTY_COLORS[difficulty] || 'text-gray-400'
-  return (
-    <span className={`inline-flex items-center gap-0.5 ${color}`}>
-      {Array.from({ length: count }).map((_, i) => (
-        <Star key={i} className="h-3 w-3 fill-current" />
-      ))}
-    </span>
-  )
+const DIFFICULTY_CONFIG: Record<string, { label: string; color: string; text: string }> = {
+  trivial: { label: 'Très facile', color: 'bg-emerald-50 text-emerald-600 border-emerald-200', text: '⚡' },
+  easy: { label: 'Facile', color: 'bg-green-50 text-green-600 border-green-200', text: '✓' },
+  medium: { label: 'Moyen', color: 'bg-amber-50 text-amber-600 border-amber-200', text: '⭐' },
+  guided: { label: 'Guidé', color: 'bg-blue-50 text-blue-600 border-blue-200', text: '📘' },
 }
 
 export default function RoadmapPage() {
   const totalItems = roadmap.flatMap((p) => p.items).length
   const doneItems = roadmap.flatMap((p) => p.items).filter((i) => i.status === 'done').length
   const inProgressItems = roadmap.flatMap((p) => p.items).filter((i) => i.status === 'in_progress').length
+  const progressPercent = Math.round((doneItems / totalItems) * 100)
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[#FAFAF8]">
       {/* ================================================================ */}
-      {/* HERO SECTION                                                     */}
+      {/* HERO                                                             */}
       {/* ================================================================ */}
-      <section className="relative pt-24 pb-16 px-4 overflow-hidden bg-gradient-to-b from-gray-50 to-white">
-        {/* Ambient blur circles */}
+      <section className="relative pt-24 pb-16 px-4 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
           <div className="absolute top-20 left-1/4 w-96 h-96 bg-[#D4AF37]/[0.03] rounded-full blur-[120px]" />
-          <div className="absolute top-10 right-1/3 w-72 h-72 bg-[#D4AF37]/[0.04] rounded-full blur-[100px]" />
-          {/* Gold particles */}
-          <div className="absolute top-[20%] left-[18%] w-1 h-1 rounded-full bg-[#D4AF37]/40 animate-pulse" />
-          <div className="absolute top-[30%] right-[22%] w-1.5 h-1.5 rounded-full bg-[#D4AF37]/30 animate-pulse [animation-delay:0.5s]" />
-          <div className="absolute top-[55%] left-[12%] w-1 h-1 rounded-full bg-[#D4AF37]/25 animate-pulse [animation-delay:1s]" />
-          <div className="absolute top-[45%] right-[28%] w-1 h-1 rounded-full bg-[#D4AF37]/30 animate-pulse [animation-delay:1.5s]" />
+          <div className="absolute top-10 right-1/3 w-72 h-72 bg-purple-100/20 rounded-full blur-[100px]" />
         </div>
 
         <div className="relative container mx-auto max-w-5xl text-center">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/20 text-[#D4AF37] text-sm mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/20 text-[#D4AF37] text-sm font-medium mb-6">
             <Rocket className="h-4 w-4" />
-            <span className="font-medium">Plan de Developpement</span>
+            Plan de Développement
           </div>
 
-          {/* Title */}
           <h1
-            className="text-4xl sm:text-5xl md:text-6xl font-bold mb-5 text-gray-900"
+            className="text-4xl sm:text-5xl md:text-6xl font-bold mb-5 text-[#1A1A2E]"
             style={{ fontFamily: 'var(--font-playfair)' }}
           >
             Roadmap{' '}
@@ -220,40 +189,44 @@ export default function RoadmapPage() {
                 backgroundClip: 'text',
               }}
             >
-              Lumiere
+              Creators
             </span>
           </h1>
 
-          {/* Subtitle */}
-          <p className="text-gray-500 text-lg max-w-2xl mx-auto mb-12 leading-relaxed">
-            7 phases pour une plateforme de production cinema IA complete.
+          <p className="text-[#4A4A68] text-lg max-w-2xl mx-auto mb-12 leading-relaxed">
+            7 phases pour la plateforme de micro-tâches IA la plus accessible au monde.
+            Chaque étape est concrète, réaliste, et pensée pour les créateurs.
           </p>
 
-          {/* Global progress card */}
-          <div className="inline-flex flex-col items-center gap-3 p-6 rounded-2xl border border-gray-100 bg-white shadow-sm">
-            <div
-              className="text-4xl font-bold text-[#D4AF37]"
-              style={{ fontFamily: 'var(--font-playfair)' }}
-            >
-              {doneItems} / {totalItems}
-            </div>
-            <div className="text-gray-500 text-sm">fonctionnalites completees</div>
-            <div className="w-64 h-2 bg-gray-100 rounded-full overflow-hidden">
+          {/* Progress card */}
+          <div className="inline-flex flex-col items-center gap-3 p-6 rounded-2xl border border-[#E5E5E0] bg-white shadow-sm">
+            <div className="flex items-center gap-3">
               <div
-                className="h-full bg-gradient-to-r from-[#D4AF37] to-[#F0D060] rounded-full"
-                style={{ width: `${(doneItems / totalItems) * 100}%` }}
+                className="text-4xl font-bold text-[#D4AF37]"
+                style={{ fontFamily: 'var(--font-playfair)' }}
+              >
+                {progressPercent}%
+              </div>
+              <div className="text-left">
+                <div className="text-sm text-[#4A4A68]">{doneItems} / {totalItems} complétés</div>
+                <div className="text-xs text-[#8E8EA0]">Phase {roadmap.findIndex(p => p.status === 'in_progress') + 1} en cours</div>
+              </div>
+            </div>
+            <div className="w-72 h-2.5 bg-gray-100 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-gradient-to-r from-[#D4AF37] to-[#F0D060] rounded-full transition-all"
+                style={{ width: `${progressPercent}%` }}
               />
             </div>
-            <div className="flex gap-6 text-xs text-gray-400">
-              <span className="text-green-500">{doneItems} termines</span>
-              <span className="text-[#D4AF37]">{inProgressItems} en cours</span>
-              <span>{totalItems - doneItems - inProgressItems} a faire</span>
+            <div className="flex gap-6 text-xs text-[#8E8EA0]">
+              <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-green-500" /> {doneItems} terminés</span>
+              <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-[#D4AF37]" /> {inProgressItems} en cours</span>
+              <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-gray-300" /> {totalItems - doneItems - inProgressItems} à venir</span>
             </div>
           </div>
         </div>
 
-        {/* Bottom separator */}
-        <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
+        <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#E5E5E0] to-transparent" />
       </section>
 
       {/* ================================================================ */}
@@ -261,13 +234,12 @@ export default function RoadmapPage() {
       {/* ================================================================ */}
       <div className="px-4 pb-16">
         <div className="container mx-auto max-w-5xl">
-          {/* Timeline with left rail */}
           <div className="relative">
-            {/* Vertical gold timeline rail */}
+            {/* Vertical timeline rail */}
             <div className="absolute left-6 top-0 bottom-0 w-px bg-gradient-to-b from-[#D4AF37]/30 via-[#D4AF37]/10 to-transparent hidden md:block" />
 
             <div className="space-y-16">
-              {roadmap.map((phase, phaseIdx) => {
+              {roadmap.map((phase) => {
                 const phaseConfig = STATUS_CONFIG[phase.status]
                 const phaseDone = phase.items.filter((i) => i.status === 'done').length
                 const phaseProgress = (phaseDone / phase.items.length) * 100
@@ -276,30 +248,27 @@ export default function RoadmapPage() {
                   <div key={phase.id} className="relative">
                     {/* Timeline dot */}
                     <div className="absolute left-6 -translate-x-1/2 top-0 hidden md:flex items-center justify-center">
-                      <div className={`w-3 h-3 rounded-full ${phaseConfig.dotColor} ring-4 ring-white`} />
+                      <div className={`w-3 h-3 rounded-full ${phaseConfig.dotColor} ring-4 ring-[#FAFAF8]`} />
                       {phase.status === 'in_progress' && (
                         <div className="absolute w-5 h-5 rounded-full bg-[#D4AF37]/20 animate-ping" />
                       )}
                     </div>
 
-                    {/* Phase content */}
                     <div className="md:ml-16">
-                      {/* Phase Header */}
-                      <div className="rounded-2xl border border-gray-100 bg-gradient-to-r from-gray-50 to-white p-5 mb-6 shadow-sm">
+                      {/* Phase header */}
+                      <div className="rounded-2xl border border-[#E5E5E0] bg-white p-5 mb-6 shadow-sm">
                         <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-3">
                           <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-semibold ${phaseConfig.bg} ${phaseConfig.color} shrink-0 w-fit`}>
-                            <phaseConfig.icon className="h-4 w-4" />
+                            <span>{phase.emoji}</span>
                             {phase.version} — {phase.name}
+                            {phase.status === 'done' && <CheckCircle className="h-4 w-4 text-green-500" />}
                           </div>
-                          <div className="flex-1 hidden sm:block">
-                            <div className="h-px bg-gray-100" />
-                          </div>
-                          <span className="text-sm text-gray-400 shrink-0">{phaseDone}/{phase.items.length}</span>
+                          <div className="flex-1 hidden sm:block"><div className="h-px bg-[#E5E5E0]" /></div>
+                          <span className="text-sm text-[#8E8EA0] shrink-0">{phaseDone}/{phase.items.length}</span>
                         </div>
 
-                        <p className="text-gray-500 text-sm mb-4">{phase.description}</p>
+                        <p className="text-[#4A4A68] text-sm mb-4">{phase.description}</p>
 
-                        {/* Phase progress bar */}
                         <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
                           <div
                             className={`h-full rounded-full transition-all duration-1000 ${
@@ -316,6 +285,7 @@ export default function RoadmapPage() {
                       <div className="grid sm:grid-cols-2 gap-3">
                         {phase.items.map((item) => {
                           const itemConfig = STATUS_CONFIG[item.status]
+                          const diffConfig = DIFFICULTY_CONFIG[item.difficulty]
 
                           return (
                             <div
@@ -324,13 +294,20 @@ export default function RoadmapPage() {
                             >
                               <itemConfig.icon className={`h-5 w-5 mt-0.5 shrink-0 ${itemConfig.color}`} />
                               <div className="flex-1 min-w-0">
-                                <div className="flex items-center gap-2 mb-1">
-                                  <p className={`text-sm font-medium ${item.status === 'done' ? 'text-gray-400 line-through' : 'text-gray-900'}`}>
+                                <div className="flex items-center gap-2 mb-1 flex-wrap">
+                                  <p className={`text-sm font-medium ${item.status === 'done' ? 'text-gray-400 line-through' : 'text-[#1A1A2E]'}`}>
                                     {item.title}
                                   </p>
-                                  <DifficultyStars difficulty={item.difficulty} />
+                                  <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full border text-[10px] font-medium ${diffConfig.color}`}>
+                                    {diffConfig.text} {diffConfig.label}
+                                  </span>
                                 </div>
-                                <p className="text-xs text-gray-400 leading-relaxed">{item.description}</p>
+                                <p className="text-xs text-[#8E8EA0] leading-relaxed">{item.description}</p>
+                                {item.note && (
+                                  <p className="text-xs text-[#D4AF37] mt-1 flex items-center gap-1">
+                                    <Sparkles className="h-3 w-3" /> {item.note}
+                                  </p>
+                                )}
                               </div>
                             </div>
                           )
@@ -343,13 +320,35 @@ export default function RoadmapPage() {
             </div>
           </div>
 
-          {/* Footer note */}
-          <div className="mt-16 p-6 rounded-2xl border border-gray-100 bg-gray-50 text-center shadow-sm">
-            <p className="text-gray-500 text-sm">
-              Cette roadmap est mise a jour en continu. Duree totale estimee : 21-27 jours de developpement.
-              <br />
-              Chemin critique : V1 → V2 → V3 → V7 (13-17 jours pour un MVP monetisable).
+          {/* Encouraging footer */}
+          <div className="mt-16 p-8 rounded-2xl border border-[#D4AF37]/20 bg-[#D4AF37]/5 text-center">
+            <PartyPopper className="h-8 w-8 text-[#D4AF37] mx-auto mb-4" />
+            <h3
+              className="text-xl font-bold mb-3 text-[#1A1A2E]"
+              style={{ fontFamily: 'var(--font-playfair)' }}
+            >
+              Créer n&apos;a jamais été aussi accessible
+            </h3>
+            <p className="text-[#4A4A68] text-sm mb-6 max-w-xl mx-auto">
+              La grande majorité des fonctionnalités sont faciles à implémenter. Avec Claude IA comme assistant,
+              chaque étape est documentée et guidée pas à pas. Le MVP (V1→V4) est à portée de main.
             </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+              <Link
+                href="/register"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#D4AF37] hover:bg-[#C5A028] text-white font-semibold transition-colors text-sm shadow-sm"
+              >
+                <Zap className="h-4 w-4" />
+                Devenir Créateur
+              </Link>
+              <Link
+                href="/tasks"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-[#E5E5E0] bg-white hover:border-[#D4AF37]/30 text-[#4A4A68] hover:text-[#1A1A2E] font-semibold transition-all text-sm"
+              >
+                Explorer les Tâches
+                <ChevronRight className="h-4 w-4" />
+              </Link>
+            </div>
           </div>
         </div>
       </div>

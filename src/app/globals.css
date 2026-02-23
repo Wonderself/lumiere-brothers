@@ -1,10 +1,10 @@
 @import "tailwindcss";
 
 :root {
-  /* Light mode base colors */
-  --background: #FFFFFF;
-  --background-secondary: #F8F9FA;
-  --background-tertiary: #F1F3F5;
+  /* Light mode base colors — Apple-style warm */
+  --background: #FAFAF8;
+  --background-secondary: #F5F5F3;
+  --background-tertiary: #EDEDEB;
   --foreground: #1A1A2E;
   --foreground-secondary: #4A4A68;
   --foreground-muted: #8E8EA0;
@@ -12,7 +12,7 @@
   --gold-light: #F0D060;
   --gold-dark: #A0831A;
   --card: #FFFFFF;
-  --card-border: #E8E8ED;
+  --card-border: #E5E5E0;
   --muted: #8E8EA0;
 
   /* Accent palette */

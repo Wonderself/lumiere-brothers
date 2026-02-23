@@ -14,6 +14,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import Image from 'next/image'
 import {
   Film,
   LayoutDashboard,
@@ -33,6 +34,9 @@ import {
   ChevronDown,
   Play,
   Users,
+  Wand2,
+  BarChart3,
+  Info,
 } from 'lucide-react'
 import { cn, getInitials } from '@/lib/utils'
 import { AnimatePresence, MotionDiv } from '@/components/ui/motion'
@@ -40,15 +44,16 @@ import { NotificationBell } from '@/components/layout/notification-bell'
 import { LumensCounter } from '@/components/layout/lumens-counter'
 
 const publicNavLinks = [
-  { href: '/streaming', label: 'Streaming', icon: Play },
-  { href: '/films', label: 'Films', icon: Film },
-  { href: '/actors', label: 'Acteurs', icon: User },
-  { href: '/community', label: 'Communaute', icon: Users },
+  { href: '/tasks', label: 'Tâches', icon: Star },
+  { href: '/collabs', label: 'Collabs', icon: Users },
+  { href: '/about', label: 'À Propos', icon: Info },
+  { href: '/roadmap', label: 'Roadmap', icon: BookOpen },
 ]
 
 const authNavLinks = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/tasks', label: 'Taches', icon: Star },
+  { href: '/creator', label: 'Créer', icon: Wand2 },
+  { href: '/analytics', label: 'Analytics', icon: BarChart3 },
 ]
 
 export function Header() {
@@ -69,17 +74,15 @@ export function Header() {
     <header className="sticky top-0 z-50 border-b border-gray-100 bg-white/80 backdrop-blur-2xl">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2.5 group">
-          <div className="relative">
-            <Clapperboard className="h-7 w-7 text-[#D4AF37] group-hover:text-[#C4A030] transition-colors duration-300" />
-            <div className="absolute inset-0 blur-lg bg-[#D4AF37]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          </div>
-          <span
-            className="text-xl font-bold tracking-wider text-[#1A1A2E] hidden xs:block"
-            style={{ fontFamily: 'var(--font-playfair)' }}
-          >
-            LUMIERE
-          </span>
+        <Link href="/" className="flex items-center gap-2.5 group shrink-0">
+          <Image
+            src="/images/lumiere-brothers-logo-creators-light.png"
+            alt="Lumière Creators"
+            width={140}
+            height={40}
+            className="h-8 w-auto object-contain group-hover:brightness-95 transition-all duration-300"
+            priority
+          />
         </Link>
 
         {/* Desktop Nav */}

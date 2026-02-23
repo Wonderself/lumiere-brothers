@@ -1,31 +1,33 @@
 import Link from 'next/link'
-import { Clapperboard } from 'lucide-react'
+import Image from 'next/image'
 
 const currentYear = new Date().getFullYear()
 
 const footerLinks = {
-  platform: [
-    { href: '/films', label: 'Catalogue Films' },
-    { href: '/actors', label: 'Acteurs IA' },
-    { href: '/streaming', label: 'Streaming' },
-    { href: '/leaderboard', label: 'Classement' },
-    { href: '/roadmap', label: 'Roadmap' },
+  services: [
+    { href: '/tasks', label: 'Micro-tâches IA' },
+    { href: '/tasks?category=video', label: 'Vidéo & Photo' },
+    { href: '/tasks?category=content', label: 'Contenu & Texte' },
+    { href: '/tasks?category=design', label: 'Design & Branding' },
+    { href: '/tasks?category=audio', label: 'Audio & Musique' },
   ],
   creators: [
-    { href: '/register', label: 'Creer un compte' },
-    { href: '/register?role=SCREENWRITER', label: 'Soumettre un scenario' },
-    { href: '/community', label: 'Communaute' },
-    { href: '/community/contests', label: 'Concours' },
-    { href: '/about', label: 'Comment ca marche' },
+    { href: '/register', label: 'Créer un compte' },
+    { href: '/dashboard', label: 'Dashboard' },
+    { href: '/analytics', label: 'Analytics' },
+    { href: '/leaderboard', label: 'Classement' },
+    { href: '/about', label: 'Comment ça marche' },
+  ],
+  company: [
+    { href: '/about', label: 'À propos' },
+    { href: '/roadmap', label: 'Roadmap' },
+    { href: 'mailto:creators@lumiere.film', label: 'creators@lumiere.film' },
+    { href: 'https://lumiere.film', label: 'Lumière Cinema' },
   ],
   legal: [
     { href: '/legal/terms', label: 'CGU' },
-    { href: '/legal/privacy', label: 'Confidentialite' },
+    { href: '/legal/privacy', label: 'Confidentialité' },
     { href: '/legal/cookies', label: 'Cookies' },
-  ],
-  contact: [
-    { href: 'mailto:contact@lumiere.film', label: 'contact@lumiere.film' },
-    { href: '/about', label: 'A propos' },
   ],
 }
 
@@ -42,14 +44,20 @@ export function Footer() {
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 lg:gap-12">
           {/* Brand */}
           <div className="col-span-2 sm:col-span-2 md:col-span-3 lg:col-span-1 space-y-4">
-            <Link href="/" className="flex items-center gap-2 group">
-              <Clapperboard className="h-6 w-6 text-[#D4AF37] group-hover:text-[#F0D060] transition-colors duration-200" />
-              <span className="text-lg font-bold text-[#D4AF37]" style={{ fontFamily: 'var(--font-playfair)' }}>
-                LUMIERE
-              </span>
+            <Link href="/" className="flex items-center gap-2.5 group">
+              <Image
+                src="/images/lumiere-brothers-logo-creators-light.png"
+                alt="Lumière Creators"
+                width={130}
+                height={36}
+                className="h-8 w-auto object-contain brightness-110 group-hover:brightness-125 transition-all duration-300"
+              />
             </Link>
             <p className="text-sm text-white/50 leading-relaxed max-w-xs">
-              La plateforme de production collaborative pour le cinema IA. Creez, collaborez, investissez.
+              Outils IA, micro-tâches guidées et collaboration pour créateurs de contenu. Créez, collaborez, gagnez.
+            </p>
+            <p className="text-xs text-[#D4AF37]/60">
+              Paris · Tel Aviv · Hollywood
             </p>
             {/* Social Links */}
             <div className="flex items-center gap-3 pt-2">
@@ -70,12 +78,12 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Platform */}
+          {/* Services */}
           <div className="space-y-3">
-            <h4 className="text-sm font-semibold text-white/80 uppercase tracking-wider">Plateforme</h4>
+            <h4 className="text-sm font-semibold text-white/80 uppercase tracking-wider">Services</h4>
             <ul className="space-y-2.5">
-              {footerLinks.platform.map((link) => (
-                <li key={link.href}>
+              {footerLinks.services.map((link) => (
+                <li key={link.label}>
                   <Link href={link.href} className="text-sm text-white/40 hover:text-[#D4AF37] transition-colors duration-200">
                     {link.label}
                   </Link>
@@ -86,7 +94,7 @@ export function Footer() {
 
           {/* Creators */}
           <div className="space-y-3">
-            <h4 className="text-sm font-semibold text-white/80 uppercase tracking-wider">Createurs</h4>
+            <h4 className="text-sm font-semibold text-white/80 uppercase tracking-wider">Créateurs</h4>
             <ul className="space-y-2.5">
               {footerLinks.creators.map((link) => (
                 <li key={link.href}>
@@ -98,11 +106,11 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Legal */}
+          {/* Company */}
           <div className="space-y-3">
-            <h4 className="text-sm font-semibold text-white/80 uppercase tracking-wider">Legal</h4>
+            <h4 className="text-sm font-semibold text-white/80 uppercase tracking-wider">Entreprise</h4>
             <ul className="space-y-2.5">
-              {footerLinks.legal.map((link) => (
+              {footerLinks.company.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className="text-sm text-white/40 hover:text-[#D4AF37] transition-colors duration-200">
                     {link.label}
@@ -112,11 +120,11 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Contact */}
+          {/* Legal */}
           <div className="space-y-3">
-            <h4 className="text-sm font-semibold text-white/80 uppercase tracking-wider">Contact</h4>
+            <h4 className="text-sm font-semibold text-white/80 uppercase tracking-wider">Légal</h4>
             <ul className="space-y-2.5">
-              {footerLinks.contact.map((link) => (
+              {footerLinks.legal.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className="text-sm text-white/40 hover:text-[#D4AF37] transition-colors duration-200">
                     {link.label}
@@ -130,10 +138,10 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-xs text-white/30">
-            &copy; {currentYear} Lumiere Brothers Pictures. Tous droits reserves.
+            &copy; {currentYear} Lumière Brothers Pictures. Tous droits réservés.
           </p>
           <p className="text-xs text-white/20">
-            Propulse par Next.js &middot; PostgreSQL &middot; Claude IA
+            Propulsé par Next.js &middot; PostgreSQL &middot; Claude IA
           </p>
         </div>
       </div>

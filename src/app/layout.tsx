@@ -16,24 +16,24 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://lumiere.film'),
+  metadataBase: new URL('https://creators.lumiere.film'),
   title: {
-    template: '%s | Lumière',
-    default: 'Lumière — Créez le Cinéma de Demain',
+    template: '%s | Lumière Creators',
+    default: 'Lumière Creators — Le Studio IA pour Créateurs de Contenu',
   },
   description:
-    "Lumière est la plateforme de micro-tâches créatives pour la production collaborative de films d'intelligence artificielle. Contribuez, créez, et soyez payé.",
+    "Lumière Creators : outils IA pour créateurs, marketplace de micro-tâches guidées, collaboration, analytics. Créez, collaborez, gagnez.",
   keywords: [
-    'cinéma IA',
-    'film intelligence artificielle',
-    'production collaborative',
-    'micro-tâches créatives',
-    'co-production film',
-    'streaming IA',
-    'acteurs IA',
-    'Lumière',
-    'cinéma du futur',
-    'freelance créatif',
+    'créateurs de contenu',
+    'outils IA créateurs',
+    'micro-tâches IA',
+    'marketplace freelance IA',
+    'vidéo IA',
+    'collaboration créative',
+    'analytics créateurs',
+    'Lumière Creators',
+    'services IA guidés',
+    'design IA',
   ],
   authors: [{ name: 'Lumière Brothers Pictures' }],
   manifest: '/manifest.json',
@@ -44,15 +44,15 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'fr_FR',
-    siteName: 'Lumière',
-    title: 'Lumière — Créez le Cinéma de Demain',
-    description: "La plateforme de micro-tâches pour la création collaborative de films IA",
-    url: 'https://lumiere.film',
+    siteName: 'Lumière Creators',
+    title: 'Lumière Creators — Le Studio IA pour Créateurs de Contenu',
+    description: "Outils IA, micro-tâches guidées et collaboration pour créateurs de contenu.",
+    url: 'https://creators.lumiere.film',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Lumière — Créez le Cinéma de Demain',
-    description: "La plateforme de micro-tâches pour la création collaborative de films IA",
+    title: 'Lumière Creators — Le Studio IA pour Créateurs',
+    description: "Outils IA, micro-tâches guidées et collaboration pour créateurs de contenu.",
   },
 }
 
@@ -63,7 +63,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr">
-      <body className={`${inter.variable} ${playfair.variable} antialiased bg-white text-[#1A1A2E]`}>
+      <body className={`${inter.variable} ${playfair.variable} antialiased bg-[#FAFAF8] text-[#1A1A2E]`}>
         <AuthSessionProvider>
         {children}
         <CookieBanner />
@@ -72,7 +72,7 @@ export default function RootLayout({
           toastOptions={{
             style: {
               background: '#FFFFFF',
-              border: '1px solid #E8E8ED',
+              border: '1px solid #E5E5E0',
               color: '#1A1A2E',
             },
           }}
